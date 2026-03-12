@@ -138,7 +138,7 @@ export default function EventosCerca() {
             </View>
             {yaGuardado && (
               <View style={s.savedBadge}>
-                <Text style={s.savedText}>⭐ Guardado</Text>
+                <Text style={s.savedText}>🔖 Guardado</Text>
               </View>
             )}
           </View>
@@ -214,7 +214,7 @@ export default function EventosCerca() {
           disabled={yaGuardado}
         >
           <Text style={s.btnText}>
-            {yaGuardado ? "⭐  Ya guardado" : "⭐  Me interesa"}
+            {yaGuardado ? "🔖  Ya guardado" : "🔖  Me interesa"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -228,13 +228,13 @@ const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
   header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 20 },
   eyebrow: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
     color: "rgba(245,237,224,0.5)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  title: { fontSize: 34, color: "#F5EDE0", fontWeight: "400", lineHeight: 42 },
   dotsRow: {
     flexDirection: "row",
     gap: 8,
@@ -250,7 +250,7 @@ const s = StyleSheet.create({
   dotActive: { width: 24, backgroundColor: "#F5EDE0" },
   counter: {
     marginLeft: 4,
-    fontSize: 13,
+    fontSize: 15,
     color: "rgba(245,237,224,0.45)",
     fontWeight: "700",
   },
@@ -275,15 +275,15 @@ const s = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
   },
-  tagText: { color: "#8B1A1A", fontSize: 14, fontWeight: "700" },
+  tagText: { color: "#8B1A1A", fontSize: 16, fontWeight: "700" },
   savedBadge: {
     backgroundColor: "#EAF2ED",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
-  savedText: { fontSize: 13, fontWeight: "800", color: "#4E8963" },
-  nombre: { fontSize: 26, color: "#2A1A1A", fontWeight: "400", lineHeight: 32 },
+  savedText: { fontSize: 15, fontWeight: "800", color: "#4E8963" },
+  nombre: { fontSize: 30, color: "#2A1A1A", fontWeight: "400", lineHeight: 38 },
   infoBlock: {
     backgroundColor: "#F5EDE0",
     borderRadius: 16,
@@ -306,14 +306,14 @@ const s = StyleSheet.create({
   },
   divider: { height: 1, backgroundColor: "#E8D5BC", marginVertical: 6 },
   infoLabel: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "700",
     color: "#C4A882",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 18, fontWeight: "700", color: "#2A1A1A" },
+  infoVal: { fontSize: 20, fontWeight: "700", color: "#2A1A1A" },
   going: {
     backgroundColor: "#EAF2ED",
     borderRadius: 14,
@@ -322,16 +322,16 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 17, fontWeight: "700", color: "#4E8963" },
-  goingNum: { fontSize: 34, fontWeight: "600", color: "#4E8963" },
+  goingLabel: { fontSize: 19, fontWeight: "700", color: "#4E8963" },
+  goingNum: { fontSize: 38, fontWeight: "600", color: "#4E8963" },
   confirmBox: {
     backgroundColor: "#EAF2ED",
     borderRadius: 14,
     padding: 16,
     gap: 4,
   },
-  confirmTitle: { fontSize: 17, fontWeight: "800", color: "#4E8963" },
-  confirmSub: { fontSize: 14, color: "#4E8963", opacity: 0.8 },
+  confirmTitle: { fontSize: 19, fontWeight: "800", color: "#4E8963" },
+  confirmSub: { fontSize: 16, color: "#4E8963", opacity: 0.8 },
   swipeHint: {
     backgroundColor: "#8B1A1A",
     borderRadius: 18,
@@ -341,8 +341,8 @@ const s = StyleSheet.create({
     gap: 14,
   },
   swipeHand: { fontSize: 32 },
-  swipeTitle: { fontSize: 17, fontWeight: "800", color: "#F5EDE0" },
-  swipeSub: { fontSize: 14, color: "rgba(245,237,224,0.6)", marginTop: 2 },
+  swipeTitle: { fontSize: 19, fontWeight: "800", color: "#F5EDE0" },
+  swipeSub: { fontSize: 16, color: "rgba(245,237,224,0.6)", marginTop: 2 },
   swipeSmall: {
     flexDirection: "row",
     alignItems: "center",
@@ -353,7 +353,7 @@ const s = StyleSheet.create({
     padding: 12,
   },
   swipeArrow: { fontSize: 20 },
-  swipeSmallText: { fontSize: 15, color: "#7A5050", fontWeight: "700" },
+  swipeSmallText: { fontSize: 17, color: "#7A5050", fontWeight: "700" },
   btn: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
@@ -361,5 +361,5 @@ const s = StyleSheet.create({
     alignItems: "center",
   },
   btnDone: { backgroundColor: "#8B1A1A", opacity: 0.45 },
-  btnText: { color: "white", fontSize: 22, fontWeight: "800" },
+  btnText: { color: "white", fontSize: 24, fontWeight: "800" },
 });

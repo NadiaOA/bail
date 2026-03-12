@@ -161,9 +161,9 @@ export function NavBar({ active }: { active: string }) {
   const router = useRouter();
   const items = [
     { id: "inicio", icon: "⌂", label: "Inicio", ruta: "/inicio" },
-    { id: "buscar", icon: "✦", label: "Buscar", ruta: "/buscar" },
-    { id: "guardados", icon: "♡", label: "Guardados", ruta: "/guardados" },
-    { id: "perfil", icon: "◯", label: "Perfil", ruta: "/perfil" },
+    { id: "buscar", icon: "🔍", label: "Buscar", ruta: "/buscar" },
+    { id: "guardados", icon: "🔖", label: "Guardados", ruta: "/guardados" },
+    { id: "perfil", icon: "👤", label: "Perfil", ruta: "/perfil" },
   ];
   return (
     <View style={nav.bar}>
@@ -235,13 +235,13 @@ const s = StyleSheet.create({
     zIndex: 10,
   },
   greeting: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
     color: "rgba(245,237,224,0.7)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  title: { fontSize: 34, color: "#F5EDE0", fontWeight: "400", lineHeight: 42 },
   body: { flex: 1 },
   bodyContent: {
     padding: 24,
@@ -257,12 +257,12 @@ const s = StyleSheet.create({
     paddingVertical: 6,
     alignSelf: "flex-start",
   },
-  tagText: { color: "#8B1A1A", fontSize: 14, fontWeight: "700" },
+  tagText: { color: "#8B1A1A", fontSize: 16, fontWeight: "700" },
   eventName: {
-    fontSize: 30,
+    fontSize: 34,
     color: "#2A1A1A",
     fontWeight: "400",
-    lineHeight: 36,
+    lineHeight: 42,
   },
   infoBlock: {
     backgroundColor: "#FFFDF9",
@@ -287,14 +287,14 @@ const s = StyleSheet.create({
   iconText: { fontSize: 26 },
   divider: { height: 1, backgroundColor: "#F5EDE0", marginVertical: 8 },
   infoLabel: {
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: "700",
     color: "#C4A882",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 20, fontWeight: "700", color: "#2A1A1A" },
+  infoVal: { fontSize: 22, fontWeight: "700", color: "#2A1A1A" },
   goingBadge: {
     backgroundColor: "#EAF2ED",
     borderRadius: 16,
@@ -303,15 +303,15 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 18, fontWeight: "700", color: "#4E8963" },
-  goingNum: { fontSize: 40, fontWeight: "600", color: "#4E8963" },
+  goingLabel: { fontSize: 20, fontWeight: "700", color: "#4E8963" },
+  goingNum: { fontSize: 44, fontWeight: "600", color: "#4E8963" },
   btnSage: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
     paddingVertical: 22,
     alignItems: "center",
   },
-  btnSageText: { color: "white", fontSize: 22, fontWeight: "800" },
+  btnSageText: { color: "white", fontSize: 24, fontWeight: "800" },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -320,7 +320,7 @@ const s = StyleSheet.create({
   },
   loadingText: {
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 18,
     color: "#7A5050",
   },
   navBarContainer: { position: "absolute", bottom: 0, left: 0, right: 0 },

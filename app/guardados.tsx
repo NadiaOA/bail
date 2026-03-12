@@ -43,7 +43,7 @@ export default function Guardados() {
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
         {eventos.length === 0 && (
           <View style={s.empty}>
-            <Text style={s.emptyIcon}>♡</Text>
+            <Text style={s.emptyIcon}>🔖</Text>
             <Text style={s.emptyText}>Aún no tiene eventos guardados</Text>
           </View>
         )}
@@ -66,7 +66,7 @@ export default function Guardados() {
               onPress={() => quitar(ev.nombre)}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Text style={s.heart}>♥</Text>
+              <Text style={s.bookmark}>🔖</Text>
             </TouchableOpacity>
           </TouchableOpacity>
         ))}
@@ -129,7 +129,7 @@ const s = StyleSheet.create({
   info: { flex: 1 },
   nombre: { fontSize: 19, color: "#2A1A1A", fontWeight: "400", lineHeight: 24 },
   meta: { fontSize: 15, color: "#7A5050", fontWeight: "600", marginTop: 3 },
-  heart: { fontSize: 26, color: "#8B1A1A" },
+  bookmark: { fontSize: 26, color: "#4E8963" },
   aviso: {
     backgroundColor: "#EAF2ED",
     borderRadius: 16,
