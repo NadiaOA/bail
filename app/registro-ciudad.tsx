@@ -12,31 +12,28 @@ import { useUser } from "./UserContext";
 
 const ESTADOS = [
   "Ciudad de México",
-  "Jalisco",
-  "Nuevo León",
-  "Puebla",
-  "Veracruz",
-  "Oaxaca",
-  "Guanajuato",
-  "Chihuahua",
-];
+ ];
 const MUNICIPIOS: Record<string, string[]> = {
   "Ciudad de México": [
     "Cuauhtémoc",
     "Benito Juárez",
     "Coyoacán",
     "Miguel Hidalgo",
-    "Iztapalapa",
     "Tlalpan",
     "Xochimilco",
+    "Álvaro Obregón",
+    "Azcapotzalco",
+    "Cuajimalpa de Morelos",
+    "Gustavo A. Madero",
+    "Iztacalco",
+    "Iztapalapa",
+    "La Magdalena Contreras",
+    "Milpa Alta",
+    "Tláhuac",
+    "Venustiano Carranza"
+
   ],
-  Jalisco: ["Guadalajara", "Zapopan", "Tlaquepaque", "Tonalá"],
-  "Nuevo León": ["Monterrey", "San Nicolás", "Guadalupe", "San Pedro"],
-  Puebla: ["Puebla", "Cholula", "Tehuacán"],
-  Veracruz: ["Veracruz", "Xalapa", "Coatzacoalcos"],
-  Oaxaca: ["Oaxaca de Juárez", "Huajuapan", "Juchitán"],
-  Guanajuato: ["León", "Guanajuato", "Irapuato", "Celaya"],
-  Chihuahua: ["Chihuahua", "Ciudad Juárez", "Delicias"],
+ 
 };
 
 export default function RegistroCiudad() {
