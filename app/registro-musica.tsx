@@ -2,11 +2,12 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
+import { useUser } from "./UserContext";
 
 const GENEROS = [
   { id: "danzon", emoji: "💃", nombre: "Danzón" },
@@ -18,12 +19,22 @@ const GENEROS = [
 export default function RegistroMusica() {
   const router = useRouter();
   const [seleccion, setSeleccion] = useState<string[]>([]);
+  const { updateProfile } = useUser();
 
   const toggle = (id: string) => {
     setSeleccion((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
+
+  function handleNext() {
+    if (seleccion.length === 0) return;
+    const generosSeleccionados = GENEROS.filter((g) =>
+      seleccion.includes(g.id)
+    ).map((g) => g.nombre);
+    updateProfile({ musica: generosSeleccionados });
+    router.push("/inicio" as any);
+  }
 
   return (
     <View style={s.screen}>
@@ -59,7 +70,7 @@ export default function RegistroMusica() {
 
         <TouchableOpacity
           style={[s.btn, seleccion.length === 0 && s.btnDisabled]}
-          onPress={() => seleccion.length > 0 && router.push("/inicio" as any)}
+          onPress={handleNext}
         >
           <Text style={s.btnText}>¡Listo! Entrar 🍄</Text>
         </TouchableOpacity>

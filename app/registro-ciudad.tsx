@@ -2,12 +2,13 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { useUser } from "./UserContext";
 
 const ESTADOS = [
   "Ciudad de México",
@@ -40,12 +41,19 @@ const MUNICIPIOS: Record<string, string[]> = {
 
 export default function RegistroCiudad() {
   const router = useRouter();
+  const { updateProfile } = useUser();
   const [estado, setEstado] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [showEstados, setShowEstados] = useState(false);
   const [showMunicipios, setShowMunicipios] = useState(false);
 
   const canContinue = estado && municipio;
+
+  function handleNext() {
+    if (!canContinue) return;
+    updateProfile({ estado, municipio });
+    router.push("/registro-musica" as any);
+  }
 
   return (
     <View style={s.screen}>
@@ -145,7 +153,7 @@ export default function RegistroCiudad() {
 
         <TouchableOpacity
           style={[s.btn, !canContinue && s.btnDisabled]}
-          onPress={() => canContinue && router.push("/registro-musica" as any)}
+          onPress={handleNext}
         >
           <Text style={s.btnText}>Siguiente →</Text>
         </TouchableOpacity>

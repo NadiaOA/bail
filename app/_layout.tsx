@@ -1,9 +1,10 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { UserProvider } from "./UserContext";
 
 export default function RootLayout() {
   return (
-    <>
+    <UserProvider>
       <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
@@ -19,6 +20,6 @@ export default function RootLayout() {
         <Stack.Screen name="perfil" />
         <Stack.Screen name="eventos-cerca" />
       </Stack>
-    </>
+    </UserProvider>
   );
 }

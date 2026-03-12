@@ -1,16 +1,18 @@
 import { useRouter } from "expo-router";
 import {
-    Alert,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
 export default function Perfil() {
   const router = useRouter();
+  const { profile } = useUser();
 
   return (
     <View style={s.screen}>
@@ -18,19 +20,18 @@ export default function Perfil() {
         <View style={s.avatar}>
           <Text style={s.avatarIcon}>👤</Text>
         </View>
-        <Text style={s.nombre}>Doña Carmen</Text>
-        <Text style={s.loc}>Ciudad de México · Cuauhtémoc</Text>
+        <Text style={s.nombre}>{profile.nombre}</Text>
+        <Text style={s.loc}>
+          {profile.municipio} · {profile.estado}
+        </Text>
       </View>
 
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
         <View style={s.section}>
-          <TouchableOpacity
-            style={s.row}
-            onPress={() => Alert.alert("Mi música", "Danzón, Salsa")}
-          >
+          <TouchableOpacity style={s.row} onPress={() => Alert.alert("Mi música", profile.musica.join(", "))}>
             <View style={s.rowLeft}>
               <Text style={s.rowLabel}>Mi música</Text>
-              <Text style={s.rowVal}>Danzón, Salsa</Text>
+              <Text style={s.rowVal}>{profile.musica.join(", ")}</Text>
             </View>
             <Text style={s.arrow}>›</Text>
           </TouchableOpacity>
@@ -39,11 +40,11 @@ export default function Perfil() {
 
           <TouchableOpacity
             style={s.row}
-            onPress={() => Alert.alert("Mi zona", "Cuauhtémoc, CDMX")}
+            onPress={() => Alert.alert("Mi zona", `${profile.municipio}, ${profile.estado}`)}
           >
             <View style={s.rowLeft}>
               <Text style={s.rowLabel}>Mi zona</Text>
-              <Text style={s.rowVal}>Cuauhtémoc</Text>
+              <Text style={s.rowVal}>{profile.municipio}</Text>
             </View>
             <Text style={s.arrow}>›</Text>
           </TouchableOpacity>

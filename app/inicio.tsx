@@ -1,27 +1,55 @@
 import { useRouter } from "expo-router";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { db } from "../firebaseConfig";
+import { useUser } from "./UserContext";
 
-export default function Inicio() {
+interface Evento {
+  id: string;
+  nombre: string;
+  genero: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  van: number;
+}
+
+// Usamos los eventos de `eventos-cerca` como respaldo, incluyendo el original
+const EVENTOS_INICIALES: Evento[] = [
+  { id: "sla-1", nombre: "Salón Los Ángeles", genero: "Danzón", fecha: "Sábado 1 de marzo", hora: "10 de la mañana", lugar: "Tlatelolco, CDMX", van: 42 },
+  { id: "inicial-ciudade", genero: " Danzón", nombre: "Plaza de la Ciudadela", fecha: "Cada Domingo", hora: "11:00 de la mañana", lugar: "Balderas, Centro", van: 158 },
+  { id: "inicial-venados", genero: " Danzón", nombre: "Parque de los Venados", fecha: "Cada Domingo", hora: "12:00 del día", lugar: "Benito Juárez", van: 94 },
+];
+
+const { height } = Dimensions.get("window");
+
+/**
+ * Componente para renderizar la tarjeta de un solo evento.
+ * Ocupa el alto de la pantalla y permite scroll interno si el contenido es muy largo.
+ */
+const EventoCard = ({ evento }: { evento: Evento }) => {
   const router = useRouter();
-
   return (
-    <View style={s.screen}>
-      <View style={s.header}>
-        <Text style={s.greeting}>Buenos días, doña Carmen</Text>
-        <Text style={s.title}>Su próximo evento</Text>
-      </View>
-
-      <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
+    <View style={{ height, backgroundColor: "#F5EDE0" }}>
+      <ScrollView
+        style={s.body}
+        contentContainerStyle={s.bodyContent}
+        alwaysBounceVertical={false}
+      >
         <View style={s.tag}>
-          <Text style={s.tagText}>🎵 Danzón</Text>
+          <Text style={s.tagText}>🎵 {evento.genero}</Text>
         </View>
-        <Text style={s.eventName}>Salón Los Ángeles</Text>
+        <Text style={s.eventName}>{evento.nombre}</Text>
 
         <View style={s.infoBlock}>
           <View style={s.infoRow}>
@@ -30,7 +58,7 @@ export default function Inicio() {
             </View>
             <View>
               <Text style={s.infoLabel}>Fecha</Text>
-              <Text style={s.infoVal}>Sábado 1 de marzo</Text>
+              <Text style={s.infoVal}>{evento.fecha}</Text>
             </View>
           </View>
           <View style={s.divider} />
@@ -40,25 +68,91 @@ export default function Inicio() {
             </View>
             <View>
               <Text style={s.infoLabel}>Hora</Text>
-              <Text style={s.infoVal}>10 de la mañana</Text>
+              <Text style={s.infoVal}>{evento.hora}</Text>
             </View>
           </View>
         </View>
 
         <View style={s.goingBadge}>
           <Text style={s.goingLabel}>Van a ir</Text>
-          <Text style={s.goingNum}>42</Text>
+          <Text style={s.goingNum}>{evento.van}</Text>
         </View>
 
         <TouchableOpacity
           style={s.btnSage}
-          onPress={() => router.push("/detalle-evento" as any)}
+          onPress={() =>
+            router.push({
+              pathname: "/detalle-evento",
+              params: { evento: JSON.stringify(evento) },
+            })
+          }
         >
           <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
         </TouchableOpacity>
       </ScrollView>
+    </View>
+  );
+};
 
-      <NavBar active="inicio" />
+export default function Inicio() {
+  const router = useRouter();
+  const { profile } = useUser();
+  const [eventos, setEventos] = useState<Evento[]>(EVENTOS_INICIALES);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    obtenerEventosWeb();
+  }, []);
+
+  async function obtenerEventosWeb() {
+    try {
+      console.log("Conectando a Firebase para la pantalla de inicio...");
+      const querySnapshot = await getDocs(collection(db, "eventos"));
+      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Evento, "id">),
+      }));
+
+      if (eventosFirebase.length > 0) {
+        setEventos(eventosFirebase);
+      }
+    } catch (error) {
+      console.error("Error conectando a Firebase en inicio:", error);
+      // Si falla, nos quedamos con los eventos iniciales
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <View style={s.screen}>
+      {loading ? (
+        <View style={s.loadingContainer}>
+          <ActivityIndicator size="large" color="#8B1A1A" />
+          <Text style={s.loadingText}>Cargando eventos...</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={eventos}
+          renderItem={({ item }) => <EventoCard evento={item} />}
+          keyExtractor={(item) => item.id}
+          pagingEnabled
+          showsVerticalScrollIndicator={false}
+          snapToAlignment="start"
+          decelerationRate="fast"
+        />
+      )}
+
+      {/* El encabezado se superpone a la lista para un efecto visual limpio */}
+      <View style={s.headerAbsolute}>
+        <Text style={s.greeting}>Buenos días, {profile.nombre}</Text>
+        <Text style={s.title}>Próximos Eventos</Text>
+      </View>
+
+      {/* La barra de navegación se mantiene fija en la parte inferior */}
+      <View style={s.navBarContainer}>
+        <NavBar active="inicio" />
+      </View>
     </View>
   );
 }
@@ -77,7 +171,7 @@ export function NavBar({ active }: { active: string }) {
         <TouchableOpacity
           key={item.id}
           style={nav.btn}
-          onPress={() => router.push(item.ruta as any)}
+          onPress={() => router.replace(item.ruta as any)}
         >
           <Text style={[nav.icon, active === item.id && nav.iconOn]}>
             {item.icon}
@@ -93,6 +187,13 @@ export function NavBar({ active }: { active: string }) {
 }
 
 const nav = StyleSheet.create({
+  // Contenedor para la barra de navegación para posicionarla absolutamente
+  navBarContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
   bar: {
     backgroundColor: "#8B1A1A",
     flexDirection: "row",
@@ -121,17 +222,34 @@ const nav = StyleSheet.create({
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 32 },
+  // El header original se convierte en un header absoluto
+  headerAbsolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(139, 26, 26, 0.85)", // Un poco transparente
+    padding: 28,
+    paddingTop: 50, // Más padding para Safe Area
+    paddingBottom: 20,
+    zIndex: 10,
+  },
   greeting: {
     fontSize: 14,
     fontWeight: "700",
-    color: "rgba(245,237,224,0.5)",
+    color: "rgba(245,237,224,0.7)",
     letterSpacing: 1,
     marginBottom: 8,
   },
   title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
   body: { flex: 1 },
-  bodyContent: { padding: 24, gap: 16 },
+  bodyContent: {
+    padding: 24,
+    gap: 16,
+    // Añadimos padding para que el contenido no quede debajo de los elementos superpuestos
+    paddingTop: 140,
+    paddingBottom: 120,
+  },
   tag: {
     backgroundColor: "#F5EAEA",
     borderRadius: 30,
@@ -194,4 +312,16 @@ const s = StyleSheet.create({
     alignItems: "center",
   },
   btnSageText: { color: "white", fontSize: 22, fontWeight: "800" },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5EDE0",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#7A5050",
+  },
+  navBarContainer: { position: "absolute", bottom: 0, left: 0, right: 0 },
 });

@@ -1,18 +1,26 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { useUser } from "./UserContext";
 
 export default function RegistroNombre() {
   const router = useRouter();
   const [nombre, setNombre] = useState("");
+  const { updateProfile } = useUser();
+
+  function handleNext() {
+    if (!nombre.trim()) return;
+    updateProfile({ nombre: nombre.trim() });
+    router.push("/registro-ciudad" as any);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -48,9 +56,7 @@ export default function RegistroNombre() {
 
         <TouchableOpacity
           style={[s.btn, !nombre.trim() && s.btnDisabled]}
-          onPress={() =>
-            nombre.trim() && router.push("/registro-ciudad" as any)
-          }
+          onPress={handleNext}
         >
           <Text style={s.btnText}>Siguiente →</Text>
         </TouchableOpacity>

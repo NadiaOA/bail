@@ -1,16 +1,42 @@
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+interface Evento {
+  id: string;
+  genero: string;
+  nombre: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  van: number;
+}
 
 export default function DetalleEvento() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ evento: string }>();
+  const evento: Evento | null = params.evento ? JSON.parse(params.evento) : null;
+
   const [confirmado, setConfirmado] = useState(false);
+
+  if (!evento) {
+    return (
+      <View style={s.screen}>
+        <View style={s.header}>
+          <TouchableOpacity style={s.back} onPress={() => router.back()}>
+            <Text style={s.backText}>‹</Text>
+          </TouchableOpacity>
+          <Text style={s.title}>Evento no encontrado</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={s.screen}>
@@ -19,9 +45,9 @@ export default function DetalleEvento() {
           <Text style={s.backText}>‹</Text>
         </TouchableOpacity>
         <View style={s.tag}>
-          <Text style={s.tagText}>🎵 Danzón</Text>
+          <Text style={s.tagText}>🎵 {evento.genero}</Text>
         </View>
-        <Text style={s.title}>Salón Los Ángeles</Text>
+        <Text style={s.title}>{evento.nombre}</Text>
       </View>
 
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
@@ -32,7 +58,7 @@ export default function DetalleEvento() {
             </View>
             <View>
               <Text style={s.infoLabel}>Fecha</Text>
-              <Text style={s.infoVal}>Sábado 1 de marzo</Text>
+              <Text style={s.infoVal}>{evento.fecha}</Text>
             </View>
           </View>
           <View style={s.divider} />
@@ -42,7 +68,7 @@ export default function DetalleEvento() {
             </View>
             <View>
               <Text style={s.infoLabel}>Hora</Text>
-              <Text style={s.infoVal}>10 de la mañana</Text>
+              <Text style={s.infoVal}>{evento.hora}</Text>
             </View>
           </View>
           <View style={s.divider} />
@@ -52,14 +78,14 @@ export default function DetalleEvento() {
             </View>
             <View>
               <Text style={s.infoLabel}>Lugar</Text>
-              <Text style={s.infoVal}>Tlatelolco, CDMX</Text>
+              <Text style={s.infoVal}>{evento.lugar}</Text>
             </View>
           </View>
         </View>
 
         <View style={s.goingBadge}>
           <Text style={s.goingLabel}>Van a ir</Text>
-          <Text style={s.goingNum}>{confirmado ? "43" : "42"}</Text>
+          <Text style={s.goingNum}>{confirmado ? evento.van + 1 : evento.van}</Text>
         </View>
 
         {confirmado ? (
@@ -78,7 +104,7 @@ export default function DetalleEvento() {
 
         <TouchableOpacity
           style={s.btnGhost}
-          onPress={() => router.push("/atuendo" as any)}
+          onPress={() => router.push("/atuendo")}
         >
           <Text style={s.btnGhostText}>Ver qué ponerme 👔</Text>
         </TouchableOpacity>
@@ -86,6 +112,7 @@ export default function DetalleEvento() {
     </View>
   );
 }
+
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },

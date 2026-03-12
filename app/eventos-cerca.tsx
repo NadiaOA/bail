@@ -11,9 +11,20 @@ import {
 import { db } from "../firebaseConfig";
 import { NavBar } from "./inicio";
 
+interface Evento {
+  id: string;
+  genero: string;
+  nombre: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  van: number;
+}
+
 // Estos datos servirán de "respaldo" mientras carga internet o si falla la conexión
-const EVENTOS_INICIALES = [
+const EVENTOS_INICIALES: Evento[] = [
   {
+    id: "inicial-ciudade",
     genero: " Danzón",
     nombre: "Plaza de la Ciudadela",
     fecha: "Cada Domingo",
@@ -22,6 +33,7 @@ const EVENTOS_INICIALES = [
     van: 158,
   },
   {
+    id: "inicial-venados",
     genero: " Danzón",
     nombre: "Parque de los Venados",
     fecha: "Cada Domingo",
@@ -30,6 +42,7 @@ const EVENTOS_INICIALES = [
     van: 94,
   },
   {
+    id: "inicial-alameda",
     genero: "🎩 Danzón",
     nombre: "Alameda del Sur",
     fecha: "Cada Domingo",
@@ -38,6 +51,7 @@ const EVENTOS_INICIALES = [
     van: 65,
   },
   {
+    id: "inicial-jardin",
     genero: "🎩 Danzón",
     nombre: "Jardín Adultos Mayores",
     fecha: "Cada Domingo",
@@ -50,13 +64,13 @@ const EVENTOS_INICIALES = [
 export default function EventosCerca() {
   const router = useRouter();
   // 1. Convertimos los eventos en un estado para poder actualizarlos desde internet
-  const [eventos, setEventos] = useState(EVENTOS_INICIALES);
+  const [eventos, setEventos] = useState<Evento[]>(EVENTOS_INICIALES);
   const [actual, setActual] = useState(0);
-  const [guardados, setGuardados] = useState<number[]>([]);
+  const [guardados, setGuardados] = useState<string[]>([]);
   const swipeRef = useRef(0);
 
   const ev = eventos[actual];
-  const yaGuardado = guardados.includes(actual);
+  const yaGuardado = ev ? guardados.includes(ev.id) : false;
 
   // 2. Usamos useEffect para conectar al sitio web al iniciar la pantalla
   useEffect(() => {
@@ -68,12 +82,15 @@ export default function EventosCerca() {
       console.log("Conectando a Firebase...");
       // Referencia a la colección 'eventos' en tu base de datos
       const querySnapshot = await getDocs(collection(db, "eventos"));
-      
-      // Convertimos los documentos de Firebase a un array simple
-      const eventosFirebase = querySnapshot.docs.map((doc) => doc.data());
+
+      // Convertimos los documentos de Firebase a un array con ID
+      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Evento, "id">),
+      }));
 
       if (eventosFirebase.length > 0) {
-        setEventos(eventosFirebase as any);
+        setEventos(eventosFirebase);
       }
       
     } catch (error) {
@@ -95,7 +112,7 @@ export default function EventosCerca() {
   });
 
   function guardar() {
-    if (!yaGuardado) setGuardados([...guardados, actual]);
+    if (!yaGuardado && ev) setGuardados([...guardados, ev.id]);
   }
 
   return (
