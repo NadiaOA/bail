@@ -271,7 +271,7 @@ const nav = StyleSheet.create({
     paddingBottom: 28,
   },
   btn: { flex: 1, alignItems: "center", gap: 3 },
-  icon: { fontSize: 24, color: "#F5EDE0", opacity: 0.35 },
+  icon: { fontSize: 24, color: "#F5EDE0", opacity: 1 },
   iconOn: { opacity: 1 },
   dot: {
     width: 5,
