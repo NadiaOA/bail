@@ -1,37 +1,105 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { db } from "../firebaseConfig";
+import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
-const eventosIniciales = [
+// Interfaz completa del evento para consistencia
+interface Evento {
+  id: string;
+  nombre: string;
+  genero: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  van: number;
+  imagen: string;
+}
+
+// Usamos los mismos eventos de respaldo que en la pantalla de inicio
+const EVENTOS_FALLBACK: Evento[] = [
   {
-    dia: "1",
-    mes: "Mar",
+    id: "sla-1",
     nombre: "Salón Los Ángeles",
-    meta: "Danzón · 10:00 am",
+    genero: "Danzón",
+    fecha: "Sábado 1 de marzo",
+    hora: "10 de la mañana",
+    lugar: "Tlatelolco, CDMX",
+    van: 42,
+    imagen:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/f3/ae/2d/caption.jpg?w=1200&h=1200&s=1",
   },
-  { dia: "8", mes: "Mar", nombre: "Salón México", meta: "Danzón · 11:00 am" },
   {
-    dia: "15",
-    mes: "Mar",
-    nombre: "Casa de la Cultura",
-    meta: "Salsa · 6:00 pm",
+    id: "inicial-ciudade",
+    genero: " Danzón",
+    nombre: "Plaza de la Ciudadela",
+    fecha: "Cada Domingo",
+    hora: "11:00 de la mañana",
+    lugar: "Balderas, Centro",
+    van: 158,
+    imagen:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/b7/cf/ec/parque-de-la-ciudadela.jpg?w=1200&h=1200&s=1",
   },
 ];
 
 export default function Guardados() {
   const router = useRouter();
-  const [eventos, setEventos] = useState(eventosIniciales);
+  const { profile, toggleSaveEvent } = useUser();
+  const [allEvents, setAllEvents] = useState<Evento[]>(EVENTOS_FALLBACK);
+  const [loading, setLoading] = useState(true);
 
-  function quitar(nombre: string) {
-    setEventos((prev) => prev.filter((e) => e.nombre !== nombre));
-  }
+  useEffect(() => {
+    async function obtenerEventos() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "eventos"));
+        const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            nombre: data.nombre || "Evento sin nombre",
+            genero: data.genero || "Baile",
+            fecha: data.fecha || "Fecha no disponible",
+            hora: data.hora || "Hora no disponible",
+            lugar: data.lugar || "Lugar no disponible",
+            van: data.van || 0,
+            imagen: data.imagen || "https://via.placeholder.com/400",
+          };
+        });
+        if (eventosFirebase.length > 0) {
+          setAllEvents(eventosFirebase);
+        }
+      } catch (error) {
+        console.error("Error obteniendo eventos para 'Guardados':", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    obtenerEventos();
+  }, []);
+
+  const savedEventos = allEvents.filter((evento) =>
+    profile.savedEvents.includes(evento.id)
+  );
+
+  const formatFecha = (fechaStr: string) => {
+    const parts = fechaStr.split(" ");
+    if (parts.length > 2 && !isNaN(parseInt(parts[1]))) {
+      const dia = parts[1];
+      const mes = parts.length > 3 ? parts[3].substring(0, 3) : "";
+      return { dia, mes: mes.charAt(0).toUpperCase() + mes.slice(1) };
+    }
+    if (fechaStr.toLowerCase().includes("domingo")) return { dia: "D", mes: "Dom" };
+    return { dia: "?", mes: "???" };
+  };
 
   return (
     <View style={s.screen}>
@@ -41,37 +109,48 @@ export default function Guardados() {
       </View>
 
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
-        {eventos.length === 0 && (
+        {loading ? (
+          <ActivityIndicator size="large" color="#8B1A1A" style={{ marginTop: 48 }} />
+        ) : savedEventos.length === 0 ? (
           <View style={s.empty}>
             <Text style={s.emptyIcon}>🔖</Text>
             <Text style={s.emptyText}>Aún no tiene eventos guardados</Text>
+            <Text style={s.emptySubtext}>
+              Pulse "Me interesa" o "¡Yo también voy!" en un evento para guardarlo aquí.
+            </Text>
           </View>
+        ) : (
+          savedEventos.map((ev) => {
+            const { dia, mes } = formatFecha(ev.fecha);
+            const meta = `${ev.genero} · ${ev.hora}`;
+            return (
+              <TouchableOpacity
+                key={ev.id}
+                style={s.row}
+                onPress={() =>
+                  router.push({
+                    pathname: "/detalle-evento",
+                    params: { evento: JSON.stringify(ev) },
+                  })
+                }
+              >
+                <View style={s.dateBox}>
+                  <Text style={s.day}>{dia}</Text>
+                  <Text style={s.mon}>{mes}</Text>
+                </View>
+                <View style={s.info}>
+                  <Text style={s.nombre}>{ev.nombre}</Text>
+                  <Text style={s.meta}>{meta}</Text>
+                </View>
+                <TouchableOpacity onPress={() => toggleSaveEvent(ev.id)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                  <Text style={s.bookmark}>🔖</Text>
+                </TouchableOpacity>
+              </TouchableOpacity>
+            );
+          })
         )}
 
-        {eventos.map((ev) => (
-          <TouchableOpacity
-            key={ev.nombre}
-            style={s.row}
-            onPress={() => router.push("/detalle-evento" as any)}
-          >
-            <View style={s.dateBox}>
-              <Text style={s.day}>{ev.dia}</Text>
-              <Text style={s.mon}>{ev.mes}</Text>
-            </View>
-            <View style={s.info}>
-              <Text style={s.nombre}>{ev.nombre}</Text>
-              <Text style={s.meta}>{ev.meta}</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => quitar(ev.nombre)}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <Text style={s.bookmark}>🔖</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        ))}
-
-        {eventos.length > 0 && (
+        {!loading && savedEventos.length > 0 && (
           <View style={s.aviso}>
             <Text style={s.avisoText}>Le avisamos el día anterior</Text>
           </View>
@@ -98,7 +177,8 @@ const s = StyleSheet.create({
   bodyContent: { padding: 24, gap: 12 },
   empty: { alignItems: "center", paddingVertical: 48, gap: 12 },
   emptyIcon: { fontSize: 48, color: "#C4A882" },
-  emptyText: { fontSize: 18, color: "#7A5050", textAlign: "center" },
+  emptyText: { fontSize: 20, fontWeight: "600", color: "#7A5050", textAlign: "center" },
+  emptySubtext: { fontSize: 16, color: "#7A5050", textAlign: "center", marginTop: 8, lineHeight: 22 },
   row: {
     backgroundColor: "#FFFDF9",
     borderRadius: 18,

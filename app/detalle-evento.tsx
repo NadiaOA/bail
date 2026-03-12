@@ -1,5 +1,4 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -7,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useUser } from "./UserContext";
 
 interface Evento {
   id: string;
@@ -16,14 +16,15 @@ interface Evento {
   hora: string;
   lugar: string;
   van: number;
+  imagen: string; // Añadido para consistencia
 }
 
 export default function DetalleEvento() {
   const router = useRouter();
   const params = useLocalSearchParams<{ evento: string }>();
   const evento: Evento | null = params.evento ? JSON.parse(params.evento) : null;
-
-  const [confirmado, setConfirmado] = useState(false);
+  const { isEventSaved, toggleSaveEvent } = useUser();
+  const confirmado = evento ? isEventSaved(evento.id) : false;
 
   if (!evento) {
     return (
@@ -96,7 +97,7 @@ export default function DetalleEvento() {
         ) : (
           <TouchableOpacity
             style={s.btnSage}
-            onPress={() => setConfirmado(true)}
+            onPress={() => evento && toggleSaveEvent(evento.id)}
           >
             <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
           </TouchableOpacity>

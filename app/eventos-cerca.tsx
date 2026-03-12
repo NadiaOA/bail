@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { db } from "../firebaseConfig";
+import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
 interface Evento {
@@ -75,12 +76,12 @@ export default function EventosCerca() {
   const router = useRouter();
   // 1. Convertimos los eventos en un estado para poder actualizarlos desde internet
   const [eventos, setEventos] = useState<Evento[]>(EVENTOS_INICIALES);
+  const { isEventSaved, toggleSaveEvent } = useUser();
   const [actual, setActual] = useState(0);
-  const [guardados, setGuardados] = useState<string[]>([]);
   const swipeRef = useRef(0);
 
   const ev = eventos[actual];
-  const yaGuardado = ev ? guardados.includes(ev.id) : false;
+  const yaGuardado = ev ? isEventSaved(ev.id) : false;
 
   // 2. Usamos useEffect para conectar al sitio web al iniciar la pantalla
   useEffect(() => {
@@ -136,7 +137,7 @@ export default function EventosCerca() {
   });
 
   function guardar() {
-    if (!yaGuardado && ev) setGuardados([...guardados, ev.id]);
+    if (!yaGuardado && ev) toggleSaveEvent(ev.id);
   }
 
   return (
