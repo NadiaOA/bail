@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,13 +23,67 @@ interface Evento {
   hora: string;
   lugar: string;
   van: number;
+  imagen: string;
 }
 
 // Usamos los eventos de `eventos-cerca` como respaldo, incluyendo el original
 const EVENTOS_INICIALES: Evento[] = [
-  { id: "sla-1", nombre: "Salón Los Ángeles", genero: "Danzón", fecha: "Sábado 1 de marzo", hora: "10 de la mañana", lugar: "Tlatelolco, CDMX", van: 42 },
-  { id: "inicial-ciudade", genero: " Danzón", nombre: "Plaza de la Ciudadela", fecha: "Cada Domingo", hora: "11:00 de la mañana", lugar: "Balderas, Centro", van: 158 },
-  { id: "inicial-venados", genero: " Danzón", nombre: "Parque de los Venados", fecha: "Cada Domingo", hora: "12:00 del día", lugar: "Benito Juárez", van: 94 },
+  {
+    id: "sla-1",
+    nombre: "Salón Los Ángeles",
+    genero: "Danzón",
+    fecha: "Sábado 1 de marzo",
+    hora: "10 de la mañana",
+    lugar: "Tlatelolco, CDMX",
+    van: 42,
+    imagen:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/f3/ae/2d/caption.jpg?w=1200&h=1200&s=1",
+  },
+  {
+    id: "inicial-ciudade",
+    genero: " Danzón",
+    nombre: "Plaza de la Ciudadela",
+    fecha: "Cada Domingo",
+    hora: "11:00 de la mañana",
+    lugar: "Balderas, Centro",
+    van: 158,
+    imagen:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/b7/cf/ec/parque-de-la-ciudadela.jpg?w=1200&h=1200&s=1"
+  },
+  {
+    id: "inicial-venados",
+    genero: " Danzón",
+    nombre: "Parque de los Venados",
+    fecha: "Cada Domingo",
+    hora: "12:00 del día",
+    lugar: "Benito Juárez",
+    van: 94,
+    imagen:
+      "https://pbs.twimg.com/media/GQNpmgabIAAV9vd.jpg",
+  },
+  {
+    id: "inicial-alameda",
+    nombre: "Alameda Central",
+    genero: "Salsa",
+    fecha: "Todos los Domingos",
+    hora: "A partir de las 12 del mediodía",
+    lugar: "Centro Histórico, Bellas Artes, CDMX",
+    van: 72,
+    imagen:
+      "https://mexicocity.cdmx.gob.mx/wp-content/uploads/2023/11/Alameda-Central.jpg",
+  },
+  {
+    id: "inicial-morisco",
+    nombre: "Kiosco Morisco",
+    genero: "Danzón, Mambo, Salsa",
+    fecha: "Todos los Domingos",
+    hora: "3 - 8 PM",
+    lugar: "Kiosc Morisco, Sta. Maria La Ribera, CDMX",
+    van: 36,
+    imagen:
+      "https://i0.wp.com/godinchilango.mx/wp-content/uploads/2024/06/kiosco-morisco-santa-maria-la-ribera-ciudad-mexico-cdmx_4.jpg?resize=750%2C600&ssl=1",
+  },
+  // https://i0.wp.com/godinchilango.mx/wp-content/uploads/2024/06/kiosco-morisco-santa-maria-la-ribera-ciudad-mexico-cdmx_4.jpg?resize=750%2C600&ssl=1
 ];
 
 const { height } = Dimensions.get("window");
@@ -40,57 +95,63 @@ const { height } = Dimensions.get("window");
 const EventoCard = ({ evento }: { evento: Evento }) => {
   const router = useRouter();
   return (
-    <View style={{ height, backgroundColor: "#F5EDE0" }}>
-      <ScrollView
-        style={s.body}
-        contentContainerStyle={s.bodyContent}
-        alwaysBounceVertical={false}
-      >
-        <View style={s.tag}>
-          <Text style={s.tagText}>🎵 {evento.genero}</Text>
-        </View>
-        <Text style={s.eventName}>{evento.nombre}</Text>
-
-        <View style={s.infoBlock}>
-          <View style={s.infoRow}>
-            <View style={s.icon}>
-              <Text style={s.iconText}>📅</Text>
-            </View>
-            <View>
-              <Text style={s.infoLabel}>Fecha</Text>
-              <Text style={s.infoVal}>{evento.fecha}</Text>
-            </View>
-          </View>
-          <View style={s.divider} />
-          <View style={s.infoRow}>
-            <View style={s.icon}>
-              <Text style={s.iconText}>🕙</Text>
-            </View>
-            <View>
-              <Text style={s.infoLabel}>Hora</Text>
-              <Text style={s.infoVal}>{evento.hora}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={s.goingBadge}>
-          <Text style={s.goingLabel}>Van a ir</Text>
-          <Text style={s.goingNum}>{evento.van}</Text>
-        </View>
-
-        <TouchableOpacity
-          style={s.btnSage}
-          onPress={() =>
-            router.push({
-              pathname: "/detalle-evento",
-              params: { evento: JSON.stringify(evento) },
-            })
-          }
+    <ImageBackground
+      source={{ uri: evento.imagen }}
+      style={s.card}
+      imageStyle={s.cardImage}
+    >
+      <View style={s.cardOverlay}>
+        <ScrollView
+          style={s.body}
+          contentContainerStyle={s.bodyContent}
+          alwaysBounceVertical={false}
         >
-          <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+          <View style={s.tag}>
+            <Text style={s.tagText}>🎵 {evento.genero}</Text>
+          </View>
+          <Text style={s.eventName}>{evento.nombre}</Text>
+
+          <View style={s.infoBlock}>
+            <View style={s.infoRow}>
+              <View style={s.icon}>
+                <Text style={s.iconText}>📅</Text>
+              </View>
+              <View>
+                <Text style={s.infoLabel}>Fecha</Text>
+                <Text style={s.infoVal}>{evento.fecha}</Text>
+              </View>
+            </View>
+            <View style={s.divider} />
+            <View style={s.infoRow}>
+              <View style={s.icon}>
+                <Text style={s.iconText}>🕙</Text>
+              </View>
+              <View>
+                <Text style={s.infoLabel}>Hora</Text>
+                <Text style={s.infoVal}>{evento.hora}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={s.goingBadge}>
+            <Text style={s.goingLabel}>Van a ir</Text>
+            <Text style={s.goingNum}>{evento.van}</Text>
+          </View>
+
+          <TouchableOpacity
+            style={s.btnSage}
+            onPress={() =>
+              router.push({
+                pathname: "/detalle-evento",
+                params: { evento: JSON.stringify(evento) },
+              })
+            }
+          >
+            <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -108,10 +169,19 @@ export default function Inicio() {
     try {
       console.log("Conectando a Firebase para la pantalla de inicio...");
       const querySnapshot = await getDocs(collection(db, "eventos"));
-      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<Evento, "id">),
-      }));
+      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          nombre: data.nombre || "Evento sin nombre",
+          genero: data.genero || "Baile",
+          fecha: data.fecha || "Fecha no disponible",
+          hora: data.hora || "Hora no disponible",
+          lugar: data.lugar || "Lugar no disponible",
+          van: data.van || 0,
+          imagen: data.imagen || "https://images.unsplash.com/photo-1519225421980-715cb0215aED?q=80&w=800",
+        };
+      });
 
       if (eventosFirebase.length > 0) {
         setEventos(eventosFirebase);
@@ -250,22 +320,33 @@ const s = StyleSheet.create({
     paddingTop: 140,
     paddingBottom: 120,
   },
+  card: {
+    width: "100%",
+    height: height,
+  },
+  cardImage: {
+    resizeMode: "cover",
+  },
+  cardOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(42, 26, 26, 0.65)",
+  },
   tag: {
-    backgroundColor: "#F5EAEA",
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
     borderRadius: 30,
     paddingHorizontal: 14,
     paddingVertical: 6,
     alignSelf: "flex-start",
   },
-  tagText: { color: "#8B1A1A", fontSize: 16, fontWeight: "700" },
+  tagText: { color: "#F5EDE0", fontSize: 16, fontWeight: "700" },
   eventName: {
     fontSize: 34,
-    color: "#2A1A1A",
+    color: "#F5EDE0",
     fontWeight: "400",
     lineHeight: 42,
   },
   infoBlock: {
-    backgroundColor: "#FFFDF9",
+    backgroundColor: "rgba(0,0,0,0.2)",
     borderRadius: 20,
     padding: 20,
     gap: 0,
@@ -280,31 +361,31 @@ const s = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 14,
-    backgroundColor: "#F5EAEA",
+    backgroundColor: "rgba(255,255,255,0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
   iconText: { fontSize: 26 },
-  divider: { height: 1, backgroundColor: "#F5EDE0", marginVertical: 8 },
+  divider: { height: 1, backgroundColor: "rgba(255,255,255,0.15)", marginVertical: 8 },
   infoLabel: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#C4A882",
+    color: "rgba(245, 237, 224, 0.7)",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 22, fontWeight: "700", color: "#2A1A1A" },
+  infoVal: { fontSize: 22, fontWeight: "700", color: "#F5EDE0" },
   goingBadge: {
-    backgroundColor: "#EAF2ED",
+    backgroundColor: "rgba(78, 137, 99, 0.3)",
     borderRadius: 16,
     padding: 18,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 20, fontWeight: "700", color: "#4E8963" },
-  goingNum: { fontSize: 44, fontWeight: "600", color: "#4E8963" },
+  goingLabel: { fontSize: 20, fontWeight: "700", color: "#EAF2ED" },
+  goingNum: { fontSize: 44, fontWeight: "600", color: "#FFFFFF" },
   btnSage: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
