@@ -1,57 +1,86 @@
 import { useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import {
-    PanResponder,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  PanResponder,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { db } from "../firebaseConfig";
 import { NavBar } from "./inicio";
 
-const eventos = [
+// Estos datos servirán de "respaldo" mientras carga internet o si falla la conexión
+const EVENTOS_INICIALES = [
   {
-    genero: "🎵 Danzón",
-    nombre: "Salón Los Ángeles",
-    fecha: "Sábado 1 de marzo",
-    hora: "10 de la mañana",
-    lugar: "Tlatelolco, CDMX",
+    genero: " Danzón",
+    nombre: "Plaza de la Ciudadela",
+    fecha: "Cada Domingo",
+    hora: "11:00 de la mañana",
+    lugar: "Balderas, Centro",
+    van: 158,
+  },
+  {
+    genero: " Danzón",
+    nombre: "Parque de los Venados",
+    fecha: "Cada Domingo",
+    hora: "12:00 del día",
+    lugar: "Benito Juárez",
+    van: 94,
+  },
+  {
+    genero: "🎩 Danzón",
+    nombre: "Alameda del Sur",
+    fecha: "Cada Domingo",
+    hora: "4:00 de la tarde",
+    lugar: "Coyoacán",
+    van: 65,
+  },
+  {
+    genero: "🎩 Danzón",
+    nombre: "Jardín Adultos Mayores",
+    fecha: "Cada Domingo",
+    hora: "11:00 de la mañana",
+    lugar: "Bosque de Chapultepec",
     van: 42,
-  },
-  {
-    genero: "🎺 Salsa",
-    nombre: "Casa de la Cultura",
-    fecha: "Domingo 2 de marzo",
-    hora: "6 de la tarde",
-    lugar: "Coyoacán, CDMX",
-    van: 28,
-  },
-  {
-    genero: "💃 Danzón",
-    nombre: "Salón México",
-    fecha: "Lunes 3 de marzo",
-    hora: "11 de la mañana",
-    lugar: "Centro, CDMX",
-    van: 19,
-  },
-  {
-    genero: "🪗 Cumbia",
-    nombre: "Foro Cultural Tepito",
-    fecha: "Martes 4 de marzo",
-    hora: "5 de la tarde",
-    lugar: "Tepito, CDMX",
-    van: 31,
   },
 ];
 
 export default function EventosCerca() {
   const router = useRouter();
+  // 1. Convertimos los eventos en un estado para poder actualizarlos desde internet
+  const [eventos, setEventos] = useState(EVENTOS_INICIALES);
   const [actual, setActual] = useState(0);
   const [guardados, setGuardados] = useState<number[]>([]);
   const swipeRef = useRef(0);
 
   const ev = eventos[actual];
   const yaGuardado = guardados.includes(actual);
+
+  // 2. Usamos useEffect para conectar al sitio web al iniciar la pantalla
+  useEffect(() => {
+    obtenerEventosWeb();
+  }, []);
+
+  async function obtenerEventosWeb() {
+    try {
+      console.log("Conectando a Firebase...");
+      // Referencia a la colección 'eventos' en tu base de datos
+      const querySnapshot = await getDocs(collection(db, "eventos"));
+      
+      // Convertimos los documentos de Firebase a un array simple
+      const eventosFirebase = querySnapshot.docs.map((doc) => doc.data());
+
+      if (eventosFirebase.length > 0) {
+        setEventos(eventosFirebase as any);
+      }
+      
+    } catch (error) {
+      console.error("Error conectando al sitio web:", error);
+      // Si falla, la app seguirá mostrando los EVENTOS_INICIALES sin romperse
+    }
+  }
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
