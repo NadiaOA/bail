@@ -1,4 +1,3 @@
-import { Evento, useUser } from ".../UserContext";
 import { Audio } from "expo-av";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Evento, useUser } from "../context/UserContext";
 import { NavBar } from "./inicio";
 
 const GROQ_API_KEY = "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";
