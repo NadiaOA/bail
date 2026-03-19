@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useUser } from "./UserContext";
+import { useUser } from "../context/UserContext";
 
 export default function RegistroNombre() {
   const router = useRouter();

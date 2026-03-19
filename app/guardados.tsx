@@ -1,26 +1,14 @@
 import { useRouter } from "expo-router";
 import {
-    ActivityIndicator,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { useUser } from "./UserContext";
+import { useUser } from "../context/UserContext";
 import { NavBar } from "./inicio";
-
-// Interfaz completa del evento para consistencia
-interface Evento {
-  id: string;
-  nombre: string;
-  genero: string;
-  fecha: string;
-  hora: string;
-  lugar: string;
-  van: number;
-  imagen: string;
-}
 
 export default function Guardados() {
   const router = useRouter();

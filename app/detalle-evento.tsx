@@ -1,23 +1,12 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { useUser } from "./UserContext";
-
-interface Evento {
-  id: string;
-  genero: string;
-  nombre: string;
-  fecha: string;
-  hora: string;
-  lugar: string;
-  van: number;
-  imagen: string; // Añadido para consistencia
-}
+import { Evento, useUser } from "../context/UserContext";
 
 export default function DetalleEvento() {
   const router = useRouter();

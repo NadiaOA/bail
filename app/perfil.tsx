@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { useUser } from "./UserContext";
+import { useUser } from "../context/UserContext";
 import { NavBar } from "./inicio";
 
 export default function Perfil() {

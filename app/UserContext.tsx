@@ -3,7 +3,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { db } from "../firebaseConfig";
 
 // Define la forma del perfil de usuario
-interface UserProfile {
+export interface UserProfile {
   nombre: string;
   estado: string;
   municipio: string;
@@ -12,7 +12,7 @@ interface UserProfile {
 }
 
 // Define la forma del evento para consistencia en toda la app
-interface Evento {
+export interface Evento {
   id: string;
   nombre: string;
   genero: string;

@@ -8,19 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useUser } from "./UserContext";
+import { useUser } from "../context/UserContext";
 import { NavBar } from "./inicio";
-
-interface Evento {
-  id: string;
-  genero: string;
-  nombre: string;
-  fecha: string;
-  hora: string;
-  lugar: string;
-  van: number;
-  imagen: string;
-}
 
 export default function EventosCerca() {
   const router = useRouter();
