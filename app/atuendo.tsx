@@ -16,25 +16,26 @@ const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const IMAGENES: Record<string, string> = {
   // Hombre
   guayabera:
-    "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600&q=80",
+    "https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwb205b0c8/images/44304994/BEIGE/large/44305005_x4.jpg?sw=2200&sh=2500",
   traje:
-    "https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=600&q=80",
+    "https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw00b9cedb/images/43434813/AZUL%20OBSCURO/large/43434814_x6.jpg?sw=2200&sh=2500",
   zapatos_h:
     "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&q=80",
   pantalon:
     "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80",
   // Mujer
   vestido:
-    "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&q=80",
+    "https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw423e43c7/images/43316925/MULTICOLOR/large/43316926_x4.jpg?sw=2200&sh=2500",
   falda:
-    "https://images.unsplash.com/photo-1577900232427-18219b9166a0?w=600&q=80",
+    "https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwe2034074/images/44967026/MULTICOLOR/large/44967027_x4.jpg?sw=2200&sh=2500",
   blusa:
-    "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=600&q=80",
+    "https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw6ef11405/images/45033087/MULTICOLOR/large/45033088_x4.jpg?sw=2200&sh=2500",
   zapatos_m:
     "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=600&q=80",
   // Fallback
   ropa: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80",
 };
+
 
 function getImagen(titulo: string): string {
   const t = titulo.toLowerCase();
