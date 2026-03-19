@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Evento, useUser } from "../context/UserContext";
+import { Evento, useUser } from "./UserContext";
 
 // --- CONFIG ---
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -188,4 +188,152 @@ const nav = StyleSheet.create({
     marginTop: 2,
   },
   labelOn: { color: "#F5EDE0" },
+});
+const s = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: "#F5EDE0" },
+
+  headerFrame: {
+    height: 140,
+    backgroundColor: "#4A6C9B",
+    paddingTop: 60,
+    paddingHorizontal: 25,
+    justifyContent: "center",
+  },
+
+  greeting: {
+    fontSize: 18,
+    color: "rgba(245,237,224,0.8)",
+  },
+
+  title: {
+    fontSize: 28,
+    color: "#F5EDE0",
+    fontWeight: "bold",
+  },
+
+  contentFrame: { flex: 1 },
+
+  navFrame: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 100,
+  },
+
+  card: {
+    width: "100%",
+    backgroundColor: "#F5EDE0",
+  },
+
+  imageContainer: {
+    height: 250,
+  },
+
+  cardImage: {
+    width: "100%",
+    height: "100%",
+  },
+
+  tag: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    backgroundColor: "#4A6C9B",
+    padding: 8,
+    borderRadius: 8,
+  },
+
+  tagText: { color: "white" },
+
+  textContainer: {
+    backgroundColor: "#F5EDE0",
+    padding: 20,
+  },
+
+  bodyContent: {
+    gap: 15,
+  },
+
+  eventName: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+
+  infoBlock: {
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 10,
+  },
+
+  infoRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+
+  icon: {
+    backgroundColor: "#4A6C9B",
+    padding: 10,
+    borderRadius: 10,
+  },
+
+  iconText: { color: "white" },
+
+  infoLabel: { fontSize: 12, color: "#666" },
+
+  infoVal: { fontSize: 16, fontWeight: "bold" },
+
+  divider: {
+    height: 1,
+    backgroundColor: "#eee",
+    marginVertical: 10,
+  },
+
+  goingBadge: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#EAF2ED",
+    padding: 15,
+    borderRadius: 10,
+  },
+
+  goingLabel: { fontSize: 16 },
+
+  goingNum: { fontSize: 20, fontWeight: "bold" },
+
+  btnSage: {
+    backgroundColor: "#4E8963",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  btnSageText: { color: "white", fontWeight: "bold" },
+
+  confirmBox: {
+    backgroundColor: "#EAF2ED",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  confirmTitle: { color: "#4E8963", fontWeight: "bold" },
+
+  btnGhost: {
+    borderWidth: 1,
+    borderColor: "#4A6C9B",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  btnGhostText: {
+    color: "#4A6C9B",
+    fontWeight: "bold",
+  },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { useUser } from "../context/UserContext";
+import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
 export default function Perfil() {
@@ -75,7 +75,9 @@ export default function Perfil() {
         </View>
       </ScrollView>
 
-      <NavBar active="perfil" />
+      <View style={s.navFrame}>
+  <NavBar active="perfil" />
+</View>
     </View>
   );
 }
@@ -146,4 +148,13 @@ const s = StyleSheet.create({
   },
   statNum: { fontSize: 42, fontWeight: "600", color: "#4E8963" },
   statLabel: { fontSize: 14, fontWeight: "700", letterSpacing: 1 },
+
+  navFrame: {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 100,
+},
 });
+

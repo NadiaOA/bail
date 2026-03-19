@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Evento, useUser } from "../context/UserContext";
+import { Evento, useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
 const GROQ_API_KEY = "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";
@@ -397,7 +397,9 @@ export default function Buscar() {
         </Pressable>
       </View>
 
-      <NavBar active="buscar" />
+      <View style={s.navFrame}>
+        <NavBar active="buscar" />
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -461,6 +463,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     alignItems: "center",
+    marginBottom: 100,
   },
   input: {
     flex: 1,
@@ -478,4 +481,12 @@ const s = StyleSheet.create({
   micIcon: { fontSize: 26 },
   sendIcon: { color: "white", fontSize: 24 },
   btnDisabled: { opacity: 0.4 },
+
+  navFrame: {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 100,
+},
 });

@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Evento, useUser } from "../context/UserContext";
+import { Evento, useUser } from "./UserContext";
 
 export default function DetalleEvento() {
   const router = useRouter();

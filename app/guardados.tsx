@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useUser } from "../context/UserContext";
+import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
 export default function Guardados() {
@@ -85,7 +85,9 @@ export default function Guardados() {
         )}
       </ScrollView>
 
-      <NavBar active="guardados" />
+      <View style={s.navFrame}>
+        <NavBar active="guardados" />
+      </View>
     </View>
   );
 }
@@ -146,4 +148,11 @@ const s = StyleSheet.create({
     alignItems: "center",
   },
   avisoText: { fontSize: 18, fontWeight: "700", color: "#4E8963" },
+  navFrame: {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 100,
+},
 });

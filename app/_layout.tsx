@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { UserProvider } from "../context/UserContext";
+import { UserProvider } from "./UserContext";
 
 export default function RootLayout() {
   return (

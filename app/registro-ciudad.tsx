@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useUser } from "../context/UserContext";
+import { useUser } from "./UserContext";
 
 const ESTADOS = [
   "Ciudad de México",

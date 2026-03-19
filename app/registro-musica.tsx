@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import { useUser } from "../context/UserContext";
+import { useUser } from "./UserContext";
 
 const GENEROS = [
   { id: "danzon", emoji: "💃", nombre: "Danzón" },
