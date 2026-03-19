@@ -27,13 +27,23 @@ interface Evento {
 // Esta será la "fuente de verdad" si la conexión a internet falla.
 const ALL_INITIAL_EVENTS: Evento[] = [
   {
+    id: "sla-0",
+    nombre: "Gran Salón Internacional",
+    genero: "Salsa",
+    fecha: "Viernes 27 de marzo",
+    hora: "7:00 PM",
+    lugar: "Tlatelolco, CDMX",
+    van: 0,
+    imagen: "https://www.convencionestlatelolco.com/_astro/GranSalon.BSmIsd1i.jpg",
+  },
+  {
     id: "sla-1",
     nombre: "Salón Los Ángeles",
     genero: "Danzón",
-    fecha: "Sábado 1 de marzo",
-    hora: "10 de la mañana",
+    fecha: "Sábado 28 de marzo",
+    hora: "10:00 AM",
     lugar: "Tlatelolco, CDMX",
-    van: 42,
+    van: 1,
     imagen: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/f3/ae/2d/caption.jpg?w=1200&h=1200&s=1",
   },
   {
@@ -43,7 +53,7 @@ const ALL_INITIAL_EVENTS: Evento[] = [
     fecha: "Cada Domingo",
     hora: "11:00 de la mañana",
     lugar: "Balderas, Centro",
-    van: 158,
+    van: 3,
     imagen: "https://interactivo.eluniversal.com.mx/mochilazo-tiempo/interiores/ciudadelaA.jpg",
   },
   {
@@ -53,7 +63,7 @@ const ALL_INITIAL_EVENTS: Evento[] = [
     fecha: "Cada Domingo",
     hora: "12:00 del día",
     lugar: "Benito Juárez",
-    van: 94,
+    van: 20,
     imagen: "https://images.unsplash.com/photo-1589218149378-184954a33986?q=80&w=800",
   },
   {
@@ -63,7 +73,7 @@ const ALL_INITIAL_EVENTS: Evento[] = [
     fecha: "Todos los Domingos",
     hora: "A partir de las 12 del mediodía",
     lugar: "Centro Histórico, Bellas Artes, CDMX",
-    van: 72,
+    van: 6,
     imagen: "https://mexicocity.cdmx.gob.mx/wp-content/uploads/2023/11/Alameda-Central.jpg",
   },
   {
@@ -73,7 +83,7 @@ const ALL_INITIAL_EVENTS: Evento[] = [
     fecha: "Todos los Domingos",
     hora: "3 - 8 PM",
     lugar: "Kiosc Morisco, Sta. Maria La Ribera, CDMX",
-    van: 36,
+    van: 32,
     imagen: "https://i0.wp.com/godinchilango.mx/wp-content/uploads/2024/06/kiosco-morisco-santa-maria-la-ribera-ciudad-mexico-cdmx_4.jpg?resize=750%2C600&ssl=1",
   },
   {
@@ -83,8 +93,38 @@ const ALL_INITIAL_EVENTS: Evento[] = [
     fecha: "Cada Domingo",
     hora: "4:00 de la tarde",
     lugar: "Coyoacán",
-    van: 65,
+    van: 45,
     imagen: "https://images.unsplash.com/photo-1611928543823-39e7d683f549?q=80&w=800",
+  },
+  {
+    id: "salon1",
+    nombre: "Salón Xcaret",
+    genero: "Salsa",
+    fecha: "Sábado 28 de marzo",
+    hora: "5:00 PM",
+    lugar: "Tlatelolco, CDMX",
+    van: 0,
+    imagen: "https://www.convencionestlatelolco.com/_astro/SalonXcaret.CUT1viYI.jpg",
+  },
+  {
+    id: "salon2",
+    nombre: "Salón Tulum",
+    genero: "Salsa",
+    fecha: "Viernes 3 de abril",
+    hora: "8:00 PM",
+    lugar: "Tlatelolco, CDMX",
+    van: 0,
+    imagen: "https://www.convencionestlatelolco.com/_astro/SalonTulum.w4YkIn3t.jpg",
+  },
+  {
+    id: "salon3",
+    nombre: "Salón Royal Rizzo",
+    genero: "Mambo",
+    fecha: "Miercoles 1 de abril",
+    hora: "8:00 PM",
+    lugar: "Lindavista, CDMX",
+    van: 0,
+    imagen: "https://lh3.googleusercontent.com/gps-cs-s/AHVAweqJgxdyRvI6vblc4yU1tMCGfcaTReMY50KqhM18u9pA9nvDG-23etYUkLQYratrCucT4Y3f88E6-O9_3B7rJllkqKzMw2I2OZ6CkeMWyV_-wa6OidlSDmxJccS0BPQQvOA5r8U=s680-w680-h510-rw",
   },
 ];
 
