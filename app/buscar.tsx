@@ -136,7 +136,7 @@ export default function Buscar() {
 
         {cargando && (
           <View style={s.bubbleBot}>
-            <ActivityIndicator color="#8B1A1A" />
+            <ActivityIndicator color="#4A6C9B" />
           </View>
         )}
 
@@ -178,22 +178,22 @@ export default function Buscar() {
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 24 },
-  eyebrow: { fontSize: 14, fontWeight: "700", color: "rgba(245,237,224,0.5)", letterSpacing: 1, marginBottom: 8 },
-  title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  header: { backgroundColor: "#4A6C9B", padding: 28, paddingBottom: 24 },
+  eyebrow: { fontSize: 15, fontWeight: "700", color: "rgba(245,237,224,0.5)", letterSpacing: 1, marginBottom: 8 },
+  title: { fontSize: 32, color: "#F5EDE0", fontWeight: "400", lineHeight: 40 },
   chat: { flex: 1 },
   chatContent: { padding: 18, gap: 14 },
   bubbleBot: { backgroundColor: "#FFFDF9", borderRadius: 22, borderBottomLeftRadius: 6, padding: 18, maxWidth: "82%", borderWidth: 1.5, borderColor: "#E8D5BC" },
-  bubbleBotText: { fontSize: 24, color: "#2A1A1A", lineHeight: 28 },
-  bubbleUser: { backgroundColor: "#8B1A1A", borderRadius: 22, borderBottomRightRadius: 6, padding: 18, maxWidth: "82%", alignSelf: "flex-end" },
-  bubbleUserText: { fontSize: 24, color: "#F5EDE0", fontWeight: "600", lineHeight: 28 },
+  bubbleBotText: { fontSize: 26, color: "#2A1A1A", lineHeight: 32 },
+  bubbleUser: { backgroundColor: "#4A6C9B", borderRadius: 22, borderBottomRightRadius: 6, padding: 18, maxWidth: "82%", alignSelf: "flex-end" },
+  bubbleUserText: { fontSize: 26, color: "#F5EDE0", fontWeight: "600", lineHeight: 32 },
   resultCard: { backgroundColor: "#FFFDF9", borderRadius: 18, padding: 18, gap: 8, maxWidth: "88%", borderWidth: 1.5, borderColor: "#E8D5BC" },
-  resultNombre: { fontSize: 20, color: "#2A1A1A", fontWeight: "400" },
-  resultInfo: { fontSize: 15, color: "#7A5050", fontWeight: "600" },
+  resultNombre: { fontSize: 22, color: "#2A1A1A", fontWeight: "400" },
+  resultInfo: { fontSize: 16, color: "#5C6B7F", fontWeight: "600" },
   resultBtn: { backgroundColor: "#4E8963", borderRadius: 12, padding: 14, alignItems: "center", marginTop: 4 },
-  resultBtnText: { color: "white", fontSize: 17, fontWeight: "700" },
+  resultBtnText: { color: "white", fontSize: 18, fontWeight: "700" },
   inputBar: { backgroundColor: "#FFFDF9", borderTopWidth: 2, borderTopColor: "#E8D5BC", padding: 12, flexDirection: "row", gap: 10, alignItems: "center" },
-  input: { flex: 1, backgroundColor: "#F5EDE0", borderWidth: 2, borderColor: "#E8D5BC", borderRadius: 14, padding: 14, fontSize: 18, color: "#2A1A1A" },
-  sendBtn: { width: 54, height: 54, backgroundColor: "#8B1A1A", borderRadius: 14, alignItems: "center", justifyContent: "center" },
-  sendIcon: { color: "white", fontSize: 20 },
+  input: { flex: 1, backgroundColor: "#F5EDE0", borderWidth: 2, borderColor: "#E8D5BC", borderRadius: 14, padding: 14, fontSize: 20, color: "#2A1A1A", placeholderTextColor: "#8A9CB3" },
+  sendBtn: { width: 54, height: 54, backgroundColor: "#4A6C9B", borderRadius: 14, alignItems: "center", justifyContent: "center" },
+  sendIcon: { color: "white", fontSize: 24 },
 });

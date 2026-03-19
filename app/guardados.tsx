@@ -2,12 +2,12 @@ import { useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { useUser } from "./UserContext";
@@ -110,7 +110,7 @@ export default function Guardados() {
 
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
         {loading ? (
-          <ActivityIndicator size="large" color="#8B1A1A" style={{ marginTop: 48 }} />
+          <ActivityIndicator size="large" color="#4A6C9B" style={{ marginTop: 48 }} />
         ) : savedEventos.length === 0 ? (
           <View style={s.empty}>
             <Text style={s.emptyIcon}>🔖</Text>
@@ -164,21 +164,21 @@ export default function Guardados() {
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 32 },
+  header: { backgroundColor: "#4A6C9B", padding: 28, paddingBottom: 32 },
   eyebrow: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
     color: "rgba(245,237,224,0.5)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  title: { fontSize: 32, color: "#F5EDE0", fontWeight: "400", lineHeight: 40 },
   body: { flex: 1 },
   bodyContent: { padding: 24, gap: 12 },
   empty: { alignItems: "center", paddingVertical: 48, gap: 12 },
-  emptyIcon: { fontSize: 48, color: "#C4A882" },
-  emptyText: { fontSize: 20, fontWeight: "600", color: "#7A5050", textAlign: "center" },
-  emptySubtext: { fontSize: 16, color: "#7A5050", textAlign: "center", marginTop: 8, lineHeight: 22 },
+  emptyIcon: { fontSize: 48, color: "#8A9CB3" },
+  emptyText: { fontSize: 22, fontWeight: "600", color: "#5C6B7F", textAlign: "center" },
+  emptySubtext: { fontSize: 18, color: "#5C6B7F", textAlign: "center", marginTop: 8, lineHeight: 26 },
   row: {
     backgroundColor: "#FFFDF9",
     borderRadius: 18,
@@ -190,31 +190,31 @@ const s = StyleSheet.create({
     borderColor: "#E8D5BC",
   },
   dateBox: {
-    backgroundColor: "#F5EAEA",
+    backgroundColor: "#E8EFF5",
     borderRadius: 12,
     width: 54,
     height: 58,
     alignItems: "center",
     justifyContent: "center",
   },
-  day: { fontSize: 26, fontWeight: "600", color: "#8B1A1A", lineHeight: 28 },
+  day: { fontSize: 28, fontWeight: "600", color: "#4A6C9B", lineHeight: 30 },
   mon: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "700",
-    color: "#8B1A1A",
+    color: "#4A6C9B",
     textTransform: "uppercase",
     letterSpacing: 1,
     opacity: 0.7,
   },
   info: { flex: 1 },
-  nombre: { fontSize: 19, color: "#2A1A1A", fontWeight: "400", lineHeight: 24 },
-  meta: { fontSize: 15, color: "#7A5050", fontWeight: "600", marginTop: 3 },
-  bookmark: { fontSize: 26, color: "#4E8963" },
+  nombre: { fontSize: 20, color: "#2A1A1A", fontWeight: "400", lineHeight: 26 },
+  meta: { fontSize: 16, color: "#5C6B7F", fontWeight: "600", marginTop: 3 },
+  bookmark: { fontSize: 28, color: "#4E8963" },
   aviso: {
     backgroundColor: "#EAF2ED",
     borderRadius: 16,
     padding: 18,
     alignItems: "center",
   },
-  avisoText: { fontSize: 17, fontWeight: "700", color: "#4E8963" },
+  avisoText: { fontSize: 18, fontWeight: "700", color: "#4E8963" },
 });

@@ -26,18 +26,18 @@ export default function Bienvenida() {
 const s = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
   },
-  mushroom: { fontSize: 80, marginBottom: 24 },
-  title: { fontSize: 72, color: "#F5EDE0", letterSpacing: 3, marginBottom: 12 },
+  mushroom: { fontSize: 90, marginBottom: 24 },
+  title: { fontSize: 76, color: "#F5EDE0", letterSpacing: 3, marginBottom: 12 },
   tagline: {
-    fontSize: 22,
+    fontSize: 24,
     color: "rgba(245,237,224,0.6)",
     textAlign: "center",
-    lineHeight: 34,
+    lineHeight: 36,
     marginBottom: 56,
     fontWeight: "500",
   },
@@ -49,7 +49,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     marginBottom: 14,
   },
-  btnPrimaryText: { color: "#8B1A1A", fontSize: 26, fontWeight: "800" },
+  btnPrimaryText: { color: "#4A6C9B", fontSize: 28, fontWeight: "800" },
   btnSecondary: {
     borderWidth: 2.5,
     borderColor: "rgba(245,237,224,0.25)",
@@ -60,7 +60,7 @@ const s = StyleSheet.create({
   },
   btnSecondaryText: {
     color: "rgba(245,237,224,0.7)",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "600",
   },
 });

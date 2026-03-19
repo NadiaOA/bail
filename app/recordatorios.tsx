@@ -1,10 +1,10 @@
 import { useRouter } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const avisos = [
@@ -49,7 +49,7 @@ export default function Recordatorios() {
         {avisos.map((av, i) => (
           <View key={i} style={[s.card, av.tipo === "nuevo" && s.cardNew]}>
             <View
-              style={[s.iconBox, av.tipo === "ok" ? s.iconSage : s.iconRed]}
+              style={[s.iconBox, av.tipo === "ok" ? s.iconSage : s.iconBlue]}
             >
               <Text style={s.iconText}>{av.icono}</Text>
             </View>
@@ -67,7 +67,7 @@ export default function Recordatorios() {
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 32 },
+  header: { backgroundColor: "#4A6C9B", padding: 28, paddingBottom: 32 },
   back: {
     backgroundColor: "rgba(255,255,255,0.12)",
     borderRadius: 12,
@@ -77,15 +77,15 @@ const s = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 16,
   },
-  backText: { color: "#F5EDE0", fontSize: 30, lineHeight: 34 },
+  backText: { color: "#F5EDE0", fontSize: 36, lineHeight: 40 },
   eyebrow: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
     color: "rgba(245,237,224,0.5)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  title: { fontSize: 32, color: "#F5EDE0", fontWeight: "400", lineHeight: 40 },
   body: { flex: 1 },
   bodyContent: { padding: 24, gap: 14 },
   card: {
@@ -98,7 +98,7 @@ const s = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#E8D5BC",
   },
-  cardNew: { borderLeftWidth: 5, borderLeftColor: "#8B1A1A", borderWidth: 0 },
+  cardNew: { borderLeftWidth: 5, borderLeftColor: "#4A6C9B", borderWidth: 0 },
   iconBox: {
     width: 54,
     height: 54,
@@ -106,17 +106,17 @@ const s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  iconRed: { backgroundColor: "#F5EAEA" },
+  iconBlue: { backgroundColor: "#E8EFF5" },
   iconSage: { backgroundColor: "#EAF2ED" },
   iconText: { fontSize: 26 },
   cardBody: { flex: 1 },
   cardTitulo: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700",
     color: "#2A1A1A",
     marginBottom: 6,
-    lineHeight: 24,
+    lineHeight: 26,
   },
-  cardMsg: { fontSize: 16, color: "#7A5050", lineHeight: 24 },
-  cardTime: { fontSize: 12, color: "#C4A882", fontWeight: "700", marginTop: 8 },
+  cardMsg: { fontSize: 18, color: "#5C6B7F", lineHeight: 26 },
+  cardTime: { fontSize: 13, color: "#8A9CB3", fontWeight: "700", marginTop: 8 },
 });

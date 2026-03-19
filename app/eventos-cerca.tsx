@@ -137,7 +137,7 @@ export default function EventosCerca() {
   });
 
   function guardar() {
-    if (!yaGuardado && ev) toggleSaveEvent(ev.id);
+    if (ev) toggleSaveEvent(ev.id);
   }
 
   return (
@@ -242,10 +242,9 @@ export default function EventosCerca() {
         <TouchableOpacity
           style={[s.btn, yaGuardado && s.btnDone]}
           onPress={guardar}
-          disabled={yaGuardado}
         >
           <Text style={s.btnText}>
-            {yaGuardado ? "🔖  Ya guardado" : "🔖  Me interesa"}
+            {yaGuardado ? "✓ Guardado" : "🔖  Me interesa"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -257,15 +256,15 @@ export default function EventosCerca() {
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 20 },
+  header: { backgroundColor: "#4A6C9B", padding: 28, paddingBottom: 20 },
   eyebrow: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "700",
     color: "rgba(245,237,224,0.5)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 34, color: "#F5EDE0", fontWeight: "400", lineHeight: 42 },
+  title: { fontSize: 36, color: "#F5EDE0", fontWeight: "400", lineHeight: 44 },
   dotsRow: {
     flexDirection: "row",
     gap: 8,
@@ -281,7 +280,7 @@ const s = StyleSheet.create({
   dotActive: { width: 24, backgroundColor: "#F5EDE0" },
   counter: {
     marginLeft: 4,
-    fontSize: 15,
+    fontSize: 16,
     color: "rgba(245,237,224,0.45)",
     fontWeight: "700",
   },
@@ -314,15 +313,15 @@ const s = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
   },
-  tagText: { color: "#F5EDE0", fontSize: 16, fontWeight: "700" },
+  tagText: { color: "#F5EDE0", fontSize: 17, fontWeight: "700" },
   savedBadge: {
     backgroundColor: "rgba(78, 137, 99, 0.8)",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
-  savedText: { fontSize: 15, fontWeight: "800", color: "#EAF2ED" },
-  nombre: { fontSize: 30, color: "#F5EDE0", fontWeight: "400", lineHeight: 38 },
+  savedText: { fontSize: 16, fontWeight: "800", color: "#EAF2ED" },
+  nombre: { fontSize: 32, color: "#F5EDE0", fontWeight: "400", lineHeight: 40 },
   infoBlock: {
     backgroundColor: "rgba(0,0,0,0.2)",
     borderRadius: 16,
@@ -345,14 +344,14 @@ const s = StyleSheet.create({
   },
   divider: { height: 1, backgroundColor: "rgba(255,255,255,0.15)", marginVertical: 6 },
   infoLabel: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
     color: "rgba(245, 237, 224, 0.7)",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 20, fontWeight: "700", color: "#F5EDE0" },
+  infoVal: { fontSize: 22, fontWeight: "700", color: "#F5EDE0" },
   going: {
     backgroundColor: "rgba(78, 137, 99, 0.3)",
     borderRadius: 14,
@@ -361,44 +360,44 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 19, fontWeight: "700", color: "#EAF2ED" },
-  goingNum: { fontSize: 38, fontWeight: "600", color: "#FFFFFF" },
+  goingLabel: { fontSize: 21, fontWeight: "700", color: "#EAF2ED" },
+  goingNum: { fontSize: 40, fontWeight: "600", color: "#FFFFFF" },
   confirmBox: {
     backgroundColor: "rgba(78, 137, 99, 0.8)",
     borderRadius: 14,
     padding: 16,
     gap: 4,
   },
-  confirmTitle: { fontSize: 19, fontWeight: "800", color: "#EAF2ED" },
-  confirmSub: { fontSize: 16, color: "#EAF2ED", opacity: 0.9 },
+  confirmTitle: { fontSize: 20, fontWeight: "800", color: "#EAF2ED" },
+  confirmSub: { fontSize: 17, color: "#EAF2ED", opacity: 0.9 },
   swipeHint: {
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     borderRadius: 18,
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 14,
   },
-  swipeHand: { fontSize: 32 },
-  swipeTitle: { fontSize: 19, fontWeight: "800", color: "#F5EDE0" },
-  swipeSub: { fontSize: 16, color: "rgba(245,237,224,0.6)", marginTop: 2 },
+  swipeHand: { fontSize: 36 },
+  swipeTitle: { fontSize: 20, fontWeight: "800", color: "#F5EDE0" },
+  swipeSub: { fontSize: 17, color: "rgba(245,237,224,0.6)", marginTop: 2 },
   swipeSmall: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    backgroundColor: "rgba(139,26,26,0.08)",
+    backgroundColor: "rgba(74, 108, 155, 0.08)",
     borderRadius: 14,
     padding: 12,
   },
   swipeArrow: { fontSize: 20 },
-  swipeSmallText: { fontSize: 17, color: "#7A5050", fontWeight: "700" },
+  swipeSmallText: { fontSize: 18, color: "#5C6B7F", fontWeight: "700" },
   btn: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
     paddingVertical: 22,
     alignItems: "center",
   },
-  btnDone: { backgroundColor: "#8B1A1A", opacity: 0.45 },
-  btnText: { color: "white", fontSize: 24, fontWeight: "800" },
+  btnDone: { backgroundColor: "#4A6C9B" },
+  btnText: { color: "white", fontSize: 26, fontWeight: "800" },
 });

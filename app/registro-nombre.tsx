@@ -46,7 +46,7 @@ export default function RegistroNombre() {
               value={nombre}
               onChangeText={setNombre}
               placeholder="Escribe su nombre aquí"
-              placeholderTextColor="#C4A882"
+              placeholderTextColor="#8A9CB3"
               autoFocus
               returnKeyType="next"
             />
@@ -68,20 +68,20 @@ export default function RegistroNombre() {
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
   header: {
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     paddingTop: 60,
     paddingHorizontal: 26,
     paddingBottom: 32,
   },
   step: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "700",
     letterSpacing: 1.5,
     textTransform: "uppercase",
     color: "rgba(245,237,224,0.5)",
     marginBottom: 8,
   },
-  title: { fontSize: 34, color: "#F5EDE0", lineHeight: 42 },
+  title: { fontSize: 36, color: "#F5EDE0", lineHeight: 44 },
   progress: { flexDirection: "row", gap: 8, marginTop: 16 },
   dot: { height: 5, borderRadius: 3, flex: 1, maxWidth: 56 },
   dotActive: { backgroundColor: "#F5EDE0" },
@@ -92,31 +92,31 @@ const s = StyleSheet.create({
     backgroundColor: "#FFFDF9",
     borderRadius: 18,
     borderWidth: 2.5,
-    borderColor: "#8B1A1A",
+    borderColor: "#4A6C9B",
     padding: 20,
   },
   inputLabel: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
     letterSpacing: 1.2,
     textTransform: "uppercase",
-    color: "#C4A882",
+    color: "#8A9CB3",
     marginBottom: 8,
   },
-  input: { fontSize: 32, color: "#2A1A1A" },
+  input: { fontSize: 34, color: "#2A1A1A", placeholderTextColor: "#8A9CB3" },
   hint: {
-    fontSize: 17,
-    color: "#7A5050",
+    fontSize: 18,
+    color: "#5C6B7F",
     textAlign: "center",
-    lineHeight: 26,
+    lineHeight: 28,
     fontWeight: "500",
   },
   btn: {
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     borderRadius: 18,
     paddingVertical: 22,
     alignItems: "center",
   },
   btnDisabled: { opacity: 0.4 },
-  btnText: { fontSize: 24, fontWeight: "800", color: "#F5EDE0" },
+  btnText: { fontSize: 26, fontWeight: "800", color: "#F5EDE0" },
 });

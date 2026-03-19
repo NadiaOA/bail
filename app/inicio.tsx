@@ -94,6 +94,9 @@ const { height } = Dimensions.get("window");
  */
 const EventoCard = ({ evento }: { evento: Evento }) => {
   const router = useRouter();
+  const { isEventSaved, toggleSaveEvent } = useUser();
+  const confirmado = isEventSaved(evento.id);
+
   return (
     <ImageBackground
       source={{ uri: evento.imagen }}
@@ -135,11 +138,30 @@ const EventoCard = ({ evento }: { evento: Evento }) => {
 
           <View style={s.goingBadge}>
             <Text style={s.goingLabel}>Van a ir</Text>
-            <Text style={s.goingNum}>{evento.van}</Text>
+            <Text style={s.goingNum}>
+              {confirmado ? evento.van + 1 : evento.van}
+            </Text>
           </View>
 
+          {confirmado ? (
+            <TouchableOpacity
+              style={s.confirmBox}
+              onPress={() => toggleSaveEvent(evento.id)}
+            >
+              <Text style={s.confirmTitle}>✓ ¡Ya está anotado!</Text>
+              <Text style={s.confirmSub}>Pulse aquí para cancelar</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={s.btnSage}
+              onPress={() => toggleSaveEvent(evento.id)}
+            >
+              <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
-            style={s.btnSage}
+            style={s.btnGhost}
             onPress={() =>
               router.push({
                 pathname: "/detalle-evento",
@@ -147,7 +169,7 @@ const EventoCard = ({ evento }: { evento: Evento }) => {
               })
             }
           >
-            <Text style={s.btnSageText}>✓ ¡Yo también voy!</Text>
+            <Text style={s.btnGhostText}>Ver más detalles</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -198,7 +220,7 @@ export default function Inicio() {
     <View style={s.screen}>
       {loading ? (
         <View style={s.loadingContainer}>
-          <ActivityIndicator size="large" color="#8B1A1A" />
+          <ActivityIndicator size="large" color="#4A6C9B" />
           <Text style={s.loadingText}>Cargando eventos...</Text>
         </View>
       ) : (
@@ -265,23 +287,23 @@ const nav = StyleSheet.create({
     right: 0,
   },
   bar: {
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     flexDirection: "row",
     paddingTop: 12,
     paddingBottom: 28,
   },
-  btn: { flex: 1, alignItems: "center", gap: 3 },
-  icon: { fontSize: 24, color: "#F5EDE0", opacity: 1 },
+  btn: { flex: 1, alignItems: "center", gap: 4 },
+  icon: { fontSize: 28, color: "#F5EDE0", opacity: 1 },
   iconOn: { opacity: 1 },
   dot: {
     width: 5,
     height: 5,
     borderRadius: 3,
     backgroundColor: "#6BA882",
-    marginTop: -1,
+    marginTop: 2,
   },
   label: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "700",
     color: "rgba(245,237,224,0.35)",
     letterSpacing: 1,
@@ -298,20 +320,20 @@ const s = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(139, 26, 26, 0.85)", // Un poco transparente
+    backgroundColor: "rgba(74, 108, 155, 0.85)", // Un poco transparente
     padding: 28,
     paddingTop: 50, // Más padding para Safe Area
     paddingBottom: 20,
     zIndex: 10,
   },
   greeting: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "700",
     color: "rgba(245,237,224,0.7)",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  title: { fontSize: 34, color: "#F5EDE0", fontWeight: "400", lineHeight: 42 },
+  title: { fontSize: 36, color: "#F5EDE0", fontWeight: "400", lineHeight: 44 },
   body: { flex: 1 },
   bodyContent: {
     padding: 24,
@@ -338,12 +360,12 @@ const s = StyleSheet.create({
     paddingVertical: 6,
     alignSelf: "flex-start",
   },
-  tagText: { color: "#F5EDE0", fontSize: 16, fontWeight: "700" },
+  tagText: { color: "#F5EDE0", fontSize: 17, fontWeight: "700" },
   eventName: {
-    fontSize: 34,
+    fontSize: 36,
     color: "#F5EDE0",
     fontWeight: "400",
-    lineHeight: 42,
+    lineHeight: 44,
   },
   infoBlock: {
     backgroundColor: "rgba(0,0,0,0.2)",
@@ -368,14 +390,14 @@ const s = StyleSheet.create({
   iconText: { fontSize: 26 },
   divider: { height: 1, backgroundColor: "rgba(255,255,255,0.15)", marginVertical: 8 },
   infoLabel: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
     color: "rgba(245, 237, 224, 0.7)",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 22, fontWeight: "700", color: "#F5EDE0" },
+  infoVal: { fontSize: 24, fontWeight: "700", color: "#F5EDE0" },
   goingBadge: {
     backgroundColor: "rgba(78, 137, 99, 0.3)",
     borderRadius: 16,
@@ -384,15 +406,37 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 20, fontWeight: "700", color: "#EAF2ED" },
-  goingNum: { fontSize: 44, fontWeight: "600", color: "#FFFFFF" },
+  goingLabel: { fontSize: 22, fontWeight: "700", color: "#EAF2ED" },
+  goingNum: { fontSize: 46, fontWeight: "600", color: "#FFFFFF" },
   btnSage: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
     paddingVertical: 22,
     alignItems: "center",
   },
-  btnSageText: { color: "white", fontSize: 24, fontWeight: "800" },
+  btnSageText: { color: "white", fontSize: 26, fontWeight: "800" },
+  confirmBox: {
+    backgroundColor: "#EAF2ED",
+    borderRadius: 18,
+    padding: 22,
+    alignItems: "center",
+    gap: 6,
+  },
+  confirmTitle: { fontSize: 26, fontWeight: "800", color: "#4E8963" },
+  confirmSub: { fontSize: 18, color: "#4E8963", opacity: 0.8 },
+  btnGhost: {
+    borderWidth: 2.5,
+    borderColor: "rgba(255,255,255,0.4)",
+    borderRadius: 18,
+    paddingVertical: 20,
+    alignItems: "center",
+    marginTop: -4,
+  },
+  btnGhostText: {
+    color: "#F5EDE0",
+    fontSize: 22,
+    fontWeight: "600",
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -401,8 +445,8 @@ const s = StyleSheet.create({
   },
   loadingText: {
     marginTop: 10,
-    fontSize: 18,
-    color: "#7A5050",
+    fontSize: 19,
+    color: "#5C6B7F",
   },
   navBarContainer: { position: "absolute", bottom: 0, left: 0, right: 0 },
 });

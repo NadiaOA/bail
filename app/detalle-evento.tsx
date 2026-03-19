@@ -1,10 +1,10 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { useUser } from "./UserContext";
 
@@ -90,10 +90,13 @@ export default function DetalleEvento() {
         </View>
 
         {confirmado ? (
-          <View style={s.confirmBox}>
+          <TouchableOpacity
+            style={s.confirmBox}
+            onPress={() => evento && toggleSaveEvent(evento.id)}
+          >
             <Text style={s.confirmTitle}>✓ ¡Ya está anotado!</Text>
-            <Text style={s.confirmSub}>Le avisaremos el día anterior</Text>
-          </View>
+            <Text style={s.confirmSub}>Pulse aquí para cancelar</Text>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={s.btnSage}
@@ -117,7 +120,7 @@ export default function DetalleEvento() {
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
-  header: { backgroundColor: "#8B1A1A", padding: 28, paddingBottom: 32 },
+  header: { backgroundColor: "#4A6C9B", padding: 28, paddingBottom: 32 },
   back: {
     backgroundColor: "rgba(255,255,255,0.12)",
     borderRadius: 12,
@@ -127,7 +130,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 16,
   },
-  backText: { color: "#F5EDE0", fontSize: 30, lineHeight: 34 },
+  backText: { color: "#F5EDE0", fontSize: 36, lineHeight: 40 },
   tag: {
     backgroundColor: "rgba(255,255,255,0.15)",
     borderRadius: 30,
@@ -136,8 +139,8 @@ const s = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 10,
   },
-  tagText: { color: "#F5EDE0", fontSize: 16, fontWeight: "700" },
-  title: { fontSize: 34, color: "#F5EDE0", fontWeight: "400", lineHeight: 42 },
+  tagText: { color: "#F5EDE0", fontSize: 17, fontWeight: "700" },
+  title: { fontSize: 36, color: "#F5EDE0", fontWeight: "400", lineHeight: 44 },
   body: { flex: 1 },
   bodyContent: { padding: 24, gap: 16 },
   infoBlock: { backgroundColor: "#FFFDF9", borderRadius: 20, padding: 20 },
@@ -151,21 +154,21 @@ const s = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 14,
-    backgroundColor: "#F5EAEA",
+    backgroundColor: "#E8EFF5",
     alignItems: "center",
     justifyContent: "center",
   },
   iconText: { fontSize: 26 },
   divider: { height: 1, backgroundColor: "#F5EDE0", marginVertical: 10 },
   infoLabel: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#C4A882",
+    fontSize: 16,
+    fontWeight: "700", 
+    color: "#8A9CB3",
     letterSpacing: 1,
     textTransform: "uppercase",
     marginBottom: 2,
   },
-  infoVal: { fontSize: 22, fontWeight: "700", color: "#2A1A1A" },
+  infoVal: { fontSize: 24, fontWeight: "700", color: "#2A1A1A" },
   goingBadge: {
     backgroundColor: "#EAF2ED",
     borderRadius: 16,
@@ -174,8 +177,8 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  goingLabel: { fontSize: 20, fontWeight: "700", color: "#4E8963" },
-  goingNum: { fontSize: 44, fontWeight: "600", color: "#4E8963" },
+  goingLabel: { fontSize: 22, fontWeight: "700", color: "#4E8963" },
+  goingNum: { fontSize: 46, fontWeight: "600", color: "#4E8963" },
   confirmBox: {
     backgroundColor: "#EAF2ED",
     borderRadius: 18,
@@ -183,15 +186,15 @@ const s = StyleSheet.create({
     alignItems: "center",
     gap: 6,
   },
-  confirmTitle: { fontSize: 24, fontWeight: "800", color: "#4E8963" },
-  confirmSub: { fontSize: 17, color: "#4E8963", opacity: 0.8 },
+  confirmTitle: { fontSize: 26, fontWeight: "800", color: "#4E8963" },
+  confirmSub: { fontSize: 18, color: "#4E8963", opacity: 0.8 },
   btnSage: {
     backgroundColor: "#4E8963",
     borderRadius: 18,
     paddingVertical: 22,
     alignItems: "center",
   },
-  btnSageText: { color: "white", fontSize: 24, fontWeight: "800" },
+  btnSageText: { color: "white", fontSize: 26, fontWeight: "800" },
   btnGhost: {
     borderWidth: 2.5,
     borderColor: "#E8D5BC",
@@ -199,5 +202,5 @@ const s = StyleSheet.create({
     paddingVertical: 20,
     alignItems: "center",
   },
-  btnGhostText: { color: "#8B1A1A", fontSize: 20, fontWeight: "600" },
+  btnGhostText: { color: "#4A6C9B", fontSize: 22, fontWeight: "600" },
 });

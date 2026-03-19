@@ -1,11 +1,11 @@
 import { useRouter } from "expo-router";
 import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
@@ -69,8 +69,8 @@ export default function Perfil() {
             <Text style={[s.statLabel, { color: "#4E8963" }]}>Eventos</Text>
           </View>
           <View style={s.statRed}>
-            <Text style={[s.statNum, { color: "#8B1A1A" }]}>3</Text>
-            <Text style={[s.statLabel, { color: "#8B1A1A" }]}>Guardados</Text>
+            <Text style={[s.statNum, { color: "#4A6C9B" }]}>3</Text>
+            <Text style={[s.statLabel, { color: "#4A6C9B" }]}>Guardados</Text>
           </View>
         </View>
       </ScrollView>
@@ -83,7 +83,7 @@ export default function Perfil() {
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },
   header: {
-    backgroundColor: "#8B1A1A",
+    backgroundColor: "#4A6C9B",
     padding: 28,
     paddingBottom: 36,
     alignItems: "center",
@@ -98,9 +98,9 @@ const s = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 4,
   },
-  avatarIcon: { fontSize: 34 },
-  nombre: { fontSize: 28, color: "#F5EDE0", fontWeight: "400" },
-  loc: { fontSize: 15, color: "rgba(245,237,224,0.5)", fontWeight: "500" },
+  avatarIcon: { fontSize: 38 },
+  nombre: { fontSize: 30, color: "#F5EDE0", fontWeight: "400" },
+  loc: { fontSize: 16, color: "rgba(245,237,224,0.5)", fontWeight: "500" },
   body: { flex: 1 },
   bodyContent: { padding: 24, gap: 16 },
   section: {
@@ -119,14 +119,14 @@ const s = StyleSheet.create({
   divider: { height: 1, backgroundColor: "#F5EDE0", marginHorizontal: 20 },
   rowLeft: { gap: 4 },
   rowLabel: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "700",
-    color: "#C4A882",
+    color: "#8A9CB3",
     letterSpacing: 1,
     textTransform: "uppercase",
   },
-  rowVal: { fontSize: 20, color: "#2A1A1A", fontWeight: "600" },
-  arrow: { fontSize: 24, color: "#C4A882" },
+  rowVal: { fontSize: 22, color: "#2A1A1A", fontWeight: "600" },
+  arrow: { fontSize: 26, color: "#8A9CB3" },
   stats: { flexDirection: "row", gap: 12 },
   statSage: {
     flex: 1,
@@ -138,12 +138,12 @@ const s = StyleSheet.create({
   },
   statRed: {
     flex: 1,
-    backgroundColor: "#F5EAEA",
+    backgroundColor: "#E8EFF5",
     borderRadius: 16,
     padding: 18,
     alignItems: "center",
     gap: 4,
   },
-  statNum: { fontSize: 40, fontWeight: "600", color: "#4E8963" },
-  statLabel: { fontSize: 13, fontWeight: "700", letterSpacing: 1 },
+  statNum: { fontSize: 42, fontWeight: "600", color: "#4E8963" },
+  statLabel: { fontSize: 14, fontWeight: "700", letterSpacing: 1 },
 });
