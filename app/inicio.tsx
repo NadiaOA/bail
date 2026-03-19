@@ -1,6 +1,4 @@
 import { useRouter } from "expo-router";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -12,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { db } from "../firebaseConfig";
 import { useUser } from "./UserContext";
 
 interface Evento {
@@ -25,66 +22,6 @@ interface Evento {
   van: number;
   imagen: string;
 }
-
-// Usamos los eventos de `eventos-cerca` como respaldo, incluyendo el original
-const EVENTOS_INICIALES: Evento[] = [
-  {
-    id: "sla-1",
-    nombre: "Salón Los Ángeles",
-    genero: "Danzón",
-    fecha: "Sábado 1 de marzo",
-    hora: "10 de la mañana",
-    lugar: "Tlatelolco, CDMX",
-    van: 42,
-    imagen:
-      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/f3/ae/2d/caption.jpg?w=1200&h=1200&s=1",
-  },
-  {
-    id: "inicial-ciudade",
-    genero: " Danzón",
-    nombre: "Plaza de la Ciudadela",
-    fecha: "Cada Domingo",
-    hora: "11:00 de la mañana",
-    lugar: "Balderas, Centro",
-    van: 158,
-    imagen:
-      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/b7/cf/ec/parque-de-la-ciudadela.jpg?w=1200&h=1200&s=1"
-  },
-  {
-    id: "inicial-venados",
-    genero: " Danzón",
-    nombre: "Parque de los Venados",
-    fecha: "Cada Domingo",
-    hora: "12:00 del día",
-    lugar: "Benito Juárez",
-    van: 94,
-    imagen:
-      "https://pbs.twimg.com/media/GQNpmgabIAAV9vd.jpg",
-  },
-  {
-    id: "inicial-alameda",
-    nombre: "Alameda Central",
-    genero: "Salsa",
-    fecha: "Todos los Domingos",
-    hora: "A partir de las 12 del mediodía",
-    lugar: "Centro Histórico, Bellas Artes, CDMX",
-    van: 72,
-    imagen:
-      "https://mexicocity.cdmx.gob.mx/wp-content/uploads/2023/11/Alameda-Central.jpg",
-  },
-  {
-    id: "inicial-morisco",
-    nombre: "Kiosco Morisco",
-    genero: "Danzón, Mambo, Salsa",
-    fecha: "Todos los Domingos",
-    hora: "3 - 8 PM",
-    lugar: "Kiosc Morisco, Sta. Maria La Ribera, CDMX",
-    van: 36,
-    imagen:
-      "https://i0.wp.com/godinchilango.mx/wp-content/uploads/2024/06/kiosco-morisco-santa-maria-la-ribera-ciudad-mexico-cdmx_4.jpg?resize=750%2C600&ssl=1",
-  },
-  // https://i0.wp.com/godinchilango.mx/wp-content/uploads/2024/06/kiosco-morisco-santa-maria-la-ribera-ciudad-mexico-cdmx_4.jpg?resize=750%2C600&ssl=1
-];
 
 const { height } = Dimensions.get("window");
 
@@ -179,53 +116,18 @@ const EventoCard = ({ evento }: { evento: Evento }) => {
 
 export default function Inicio() {
   const router = useRouter();
-  const { profile } = useUser();
-  const [eventos, setEventos] = useState<Evento[]>(EVENTOS_INICIALES);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    obtenerEventosWeb();
-  }, []);
-
-  async function obtenerEventosWeb() {
-    try {
-      console.log("Conectando a Firebase para la pantalla de inicio...");
-      const querySnapshot = await getDocs(collection(db, "eventos"));
-      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          nombre: data.nombre || "Evento sin nombre",
-          genero: data.genero || "Baile",
-          fecha: data.fecha || "Fecha no disponible",
-          hora: data.hora || "Hora no disponible",
-          lugar: data.lugar || "Lugar no disponible",
-          van: data.van || 0,
-          imagen: data.imagen || "https://images.unsplash.com/photo-1519225421980-715cb0215aED?q=80&w=800",
-        };
-      });
-
-      if (eventosFirebase.length > 0) {
-        setEventos(eventosFirebase);
-      }
-    } catch (error) {
-      console.error("Error conectando a Firebase en inicio:", error);
-      // Si falla, nos quedamos con los eventos iniciales
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { profile, allEvents, loadingEvents } = useUser();
 
   return (
     <View style={s.screen}>
-      {loading ? (
+      {loadingEvents ? (
         <View style={s.loadingContainer}>
           <ActivityIndicator size="large" color="#4A6C9B" />
           <Text style={s.loadingText}>Cargando eventos...</Text>
         </View>
       ) : (
         <FlatList
-          data={eventos}
+          data={allEvents}
           renderItem={({ item }) => <EventoCard evento={item} />}
           keyExtractor={(item) => item.id}
           pagingEnabled

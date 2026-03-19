@@ -1,10 +1,10 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useUser } from "./UserContext";
 
@@ -108,7 +108,12 @@ export default function DetalleEvento() {
 
         <TouchableOpacity
           style={s.btnGhost}
-          onPress={() => router.push("/atuendo")}
+          onPress={() =>
+            router.push({
+              pathname: "/atuendo",
+              params: { evento: JSON.stringify(evento) },
+            })
+          }
         >
           <Text style={s.btnGhostText}>Ver qué ponerme 👔</Text>
         </TouchableOpacity>

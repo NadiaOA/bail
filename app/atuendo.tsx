@@ -1,5 +1,5 @@
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -9,8 +9,19 @@ import {
   View,
 } from "react-native";
 
-const GROQ_API_KEY = "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"; // 👈 Misma key que en buscar.tsx
+const GROQ_API_KEY = "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"; // 👈 Misma key que en buscar.tsx
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+interface Evento {
+  id: string;
+  nombre: string;
+  genero: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  van: number;
+  imagen: string;
+}
 
 const sugerenciasDefault = [
   { icon: "👔", titulo: "Guayabera o traje claro", desc: "Colores claros, manga larga" },
@@ -20,6 +31,11 @@ const consejoDefault = "Un pañuelo de bolsillo le da un toque muy elegante";
 
 export default function Atuendo() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ evento?: string }>();
+  const evento: Evento | null = useMemo(
+    () => (params.evento ? JSON.parse(params.evento) : null),
+    [params.evento]
+  );
 
   const [sugerencias, setSugerencias] = useState(sugerenciasDefault);
   const [consejo, setConsejo] = useState(consejoDefault);
@@ -27,6 +43,9 @@ export default function Atuendo() {
 
   useEffect(() => {
     async function cargarIA() {
+      const userPrompt = evento
+        ? `Dame 3 sugerencias de atuendo para ir a bailar ${evento.genero} a ${evento.nombre} el ${evento.fecha}.`
+        : "Dame 3 sugerencias de atuendo para ir a bailar Danzón al Salón Los Ángeles mañana.";
       try {
         const response = await fetch(GROQ_URL, {
           method: "POST",
@@ -44,10 +63,7 @@ Responde ÚNICAMENTE con JSON válido, sin texto extra, sin markdown, sin bloque
 Formato exacto:
 {"sugerencias":[{"icon":"emoji","titulo":"texto","desc":"texto"},{"icon":"emoji","titulo":"texto","desc":"texto"},{"icon":"emoji","titulo":"texto","desc":"texto"}],"consejo":"texto"}`,
               },
-              {
-                role: "user",
-                content: "Dame 3 sugerencias de atuendo para ir a bailar Danzón al Salón Los Ángeles mañana.",
-              },
+              { role: "user", content: userPrompt },
             ],
             max_tokens: 400,
             temperature: 0.7,
@@ -67,7 +83,7 @@ Formato exacto:
       }
     }
     cargarIA();
-  }, []);
+  }, [evento]);
 
   return (
     <View style={s.screen}>
@@ -75,7 +91,9 @@ Formato exacto:
         <TouchableOpacity style={s.back} onPress={() => router.back()}>
           <Text style={s.backText}>‹</Text>
         </TouchableOpacity>
-        <Text style={s.eyebrow}>Salón Los Ángeles · Mañana</Text>
+        <Text style={s.eyebrow}>
+          {evento ? `${evento.nombre} · ${evento.fecha}` : "Recomendación general"}
+        </Text>
         <Text style={s.title}>¿Qué me pongo?</Text>
       </View>
 

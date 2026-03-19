@@ -1,6 +1,4 @@
 import { useRouter } from "expo-router";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import {
     ActivityIndicator,
     ScrollView,
@@ -9,7 +7,6 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { db } from "../firebaseConfig";
 import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
@@ -25,66 +22,9 @@ interface Evento {
   imagen: string;
 }
 
-// Usamos los mismos eventos de respaldo que en la pantalla de inicio
-const EVENTOS_FALLBACK: Evento[] = [
-  {
-    id: "sla-1",
-    nombre: "Salón Los Ángeles",
-    genero: "Danzón",
-    fecha: "Sábado 1 de marzo",
-    hora: "10 de la mañana",
-    lugar: "Tlatelolco, CDMX",
-    van: 42,
-    imagen:
-      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/f3/ae/2d/caption.jpg?w=1200&h=1200&s=1",
-  },
-  {
-    id: "inicial-ciudade",
-    genero: " Danzón",
-    nombre: "Plaza de la Ciudadela",
-    fecha: "Cada Domingo",
-    hora: "11:00 de la mañana",
-    lugar: "Balderas, Centro",
-    van: 158,
-    imagen:
-      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/b7/cf/ec/parque-de-la-ciudadela.jpg?w=1200&h=1200&s=1",
-  },
-];
-
 export default function Guardados() {
   const router = useRouter();
-  const { profile, toggleSaveEvent } = useUser();
-  const [allEvents, setAllEvents] = useState<Evento[]>(EVENTOS_FALLBACK);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function obtenerEventos() {
-      try {
-        const querySnapshot = await getDocs(collection(db, "eventos"));
-        const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            nombre: data.nombre || "Evento sin nombre",
-            genero: data.genero || "Baile",
-            fecha: data.fecha || "Fecha no disponible",
-            hora: data.hora || "Hora no disponible",
-            lugar: data.lugar || "Lugar no disponible",
-            van: data.van || 0,
-            imagen: data.imagen || "https://via.placeholder.com/400",
-          };
-        });
-        if (eventosFirebase.length > 0) {
-          setAllEvents(eventosFirebase);
-        }
-      } catch (error) {
-        console.error("Error obteniendo eventos para 'Guardados':", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    obtenerEventos();
-  }, []);
+  const { profile, toggleSaveEvent, allEvents, loadingEvents } = useUser();
 
   const savedEventos = allEvents.filter((evento) =>
     profile.savedEvents.includes(evento.id)
@@ -109,7 +49,7 @@ export default function Guardados() {
       </View>
 
       <ScrollView style={s.body} contentContainerStyle={s.bodyContent}>
-        {loading ? (
+        {loadingEvents ? (
           <ActivityIndicator size="large" color="#4A6C9B" style={{ marginTop: 48 }} />
         ) : savedEventos.length === 0 ? (
           <View style={s.empty}>
@@ -150,7 +90,7 @@ export default function Guardados() {
           })
         )}
 
-        {!loading && savedEventos.length > 0 && (
+        {!loadingEvents && savedEventos.length > 0 && (
           <View style={s.aviso}>
             <Text style={s.avisoText}>Le avisamos el día anterior</Text>
           </View>
@@ -161,6 +101,7 @@ export default function Guardados() {
     </View>
   );
 }
+
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#F5EDE0" },

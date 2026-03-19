@@ -1,6 +1,5 @@
 import { useRouter } from "expo-router";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   ImageBackground,
   PanResponder,
@@ -9,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { db } from "../firebaseConfig";
 import { useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
@@ -24,105 +22,15 @@ interface Evento {
   imagen: string;
 }
 
-// Estos datos servirán de "respaldo" mientras carga internet o si falla la conexión
-const EVENTOS_INICIALES: Evento[] = [
-  {
-    id: "inicial-ciudade",
-    genero: " Danzón",
-    nombre: "Plaza de la Ciudadela",
-    fecha: "Cada Domingo",
-    hora: "11:00 de la mañana",
-    lugar: "Balderas, Centro",
-    van: 158,
-    imagen:
-      "https://interactivo.eluniversal.com.mx/mochilazo-tiempo/interiores/ciudadelaA.jpg",
-  },
-  {
-    id: "inicial-venados",
-    genero: " Danzón",
-    nombre: "Parque de los Venados",
-    fecha: "Cada Domingo",
-    hora: "12:00 del día",
-    lugar: "Benito Juárez",
-    van: 94,
-    imagen:
-      "https://images.unsplash.com/photo-1589218149378-184954a33986?q=80&w=800",
-  },
-  {
-    id: "inicial-alameda",
-    genero: "🎩 Danzón",
-    nombre: "Alameda del Sur",
-    fecha: "Cada Domingo",
-    hora: "4:00 de la tarde",
-    lugar: "Coyoacán",
-    van: 65,
-    imagen:
-      "https://images.unsplash.com/photo-1611928543823-39e7d683f549?q=80&w=800",
-  },
-  {
-    id: "inicial-jardin",
-    genero: "🎩 Danzón",
-    nombre: "Jardín Adultos Mayores",
-    fecha: "Cada Domingo",
-    hora: "11:00 de la mañana",
-    lugar: "Bosque de Chapultepec",
-    van: 42,
-    imagen:
-      "https://images.unsplash.com/photo-1554422319-999511003734?q=80&w=800",
-  },
-];
-
 export default function EventosCerca() {
   const router = useRouter();
-  // 1. Convertimos los eventos en un estado para poder actualizarlos desde internet
-  const [eventos, setEventos] = useState<Evento[]>(EVENTOS_INICIALES);
-  const { isEventSaved, toggleSaveEvent } = useUser();
+  const { isEventSaved, toggleSaveEvent, allEvents, loadingEvents } = useUser();
   const [actual, setActual] = useState(0);
   const swipeRef = useRef(0);
 
-  const ev = eventos[actual];
+  // Usamos los eventos del contexto central
+  const ev = allEvents[actual];
   const yaGuardado = ev ? isEventSaved(ev.id) : false;
-
-  // 2. Usamos useEffect para conectar al sitio web al iniciar la pantalla
-  useEffect(() => {
-    obtenerEventosWeb();
-  }, []);
-
-  async function obtenerEventosWeb() {
-    try {
-      console.log("Conectando a Firebase...");
-      // Referencia a la colección 'eventos' en tu base de datos
-      const querySnapshot = await getDocs(collection(db, "eventos"));
-
-      // Convertimos los documentos de Firebase a un array con ID
-      const eventosFirebase: Evento[] = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          genero: data.genero || "Baile",
-          nombre: data.nombre || "Evento sin nombre",
-          fecha: data.fecha || "Fecha no disponible",
-          hora: data.hora || "Hora no disponible",
-          lugar: data.lugar || "Lugar no disponible",
-          van: data.van || 0,
-          // Si no hay imagen en Firebase, usamos una por defecto para que no se vea vacío
-          imagen: data.imagen || "https://images.unsplash.com/photo-1519225421980-715cb0215aED?q=80&w=800",
-        };
-      });
-
-      if (eventosFirebase.length > 0) {
-        // Para evitar duplicados, filtramos los eventos de ejemplo que ya podrían estar en Firebase (por nombre)
-        const nombresFirebase = new Set(eventosFirebase.map(e => e.nombre));
-        const eventosInicialesFiltrados = EVENTOS_INICIALES.filter(e => !nombresFirebase.has(e.nombre));
-        // Combinamos los eventos de Firebase con los de respaldo para tener una lista más completa
-        setEventos([...eventosFirebase, ...eventosInicialesFiltrados]);
-      }
-      
-    } catch (error) {
-      console.error("Error conectando al sitio web:", error);
-      // Si falla, la app seguirá mostrando los EVENTOS_INICIALES sin romperse
-    }
-  }
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -131,7 +39,7 @@ export default function EventosCerca() {
     },
     onPanResponderRelease: (_, g) => {
       const diff = g.moveX - swipeRef.current;
-      if (diff < -40 && actual < eventos.length - 1) setActual(actual + 1);
+      if (diff < -40 && actual < allEvents.length - 1) setActual(actual + 1);
       if (diff > 40 && actual > 0) setActual(actual - 1);
     },
   });
@@ -140,17 +48,23 @@ export default function EventosCerca() {
     if (ev) toggleSaveEvent(ev.id);
   }
 
+  // Mostramos un indicador de carga si los eventos aún no están listos
+  if (loadingEvents || !ev) {
+    // Podemos mostrar un loader más elegante o simplemente una vista vacía
+    return <View style={s.screen}><NavBar active="buscar" /></View>;
+  }
+
   return (
     <View style={s.screen}>
       <View style={s.header}>
         <Text style={s.eyebrow}>Cerca de usted</Text>
         <Text style={s.title}>Eventos esta semana</Text>
         <View style={s.dotsRow}>
-          {eventos.map((_, i) => (
+          {allEvents.map((_, i) => (
             <View key={i} style={[s.dot, i === actual && s.dotActive]} />
           ))}
           <Text style={s.counter}>
-            {actual + 1} de {eventos.length}
+            {actual + 1} de {allEvents.length}
           </Text>
         </View>
       </View>
@@ -233,7 +147,7 @@ export default function EventosCerca() {
           <View style={s.swipeSmall}>
             {actual > 0 && <Text style={s.swipeArrow}>👉</Text>}
             <Text style={s.swipeSmallText}>Deslice para ver más</Text>
-            {actual < eventos.length - 1 && (
+            {actual < allEvents.length - 1 && (
               <Text style={s.swipeArrow}>👈</Text>
             )}
           </View>
