@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-const GROQ_API_KEY = "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"; // 👈 Misma key que en buscar.tsx
+const GROQ_API_KEY = "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"; // 👈 Misma key que en buscar.tsx
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 const IMAGENES: Record<string, string> = {
