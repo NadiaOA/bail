@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-const GROQ_API_KEY = "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"; 
+const GROQ_API_KEY = "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"; 
 
 const IMAGENES: Record<string, string> = {
   // Hombre
