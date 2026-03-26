@@ -17,7 +17,7 @@ import {
 import { Evento, useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const WHISPER_URL = "https://api.groq.com/openai/v1/audio/transcriptions";
 
@@ -37,11 +37,11 @@ ${listaEventos}
 
 Reglas:
 - Habla de usted, con respeto y calidez.
-- Si preguntan por eventos, menciona los disponibles y sus detalles (fecha, hora, lugar).
+- Si preguntan por eventos, menciona los disponibles y sus detalles (fecha, hora, lugar) en máximo 2 lineas, todo muy concreto.
 - Para danzón: guayabera o traje claro, zapatos de piel, pañuelo de bolsillo. Vestido elegante, tacón cubano para damas.
 - Para salsa: ropa cómoda y colorida, zapatos con suela lisa.
 - Para cumbia: ropa fresca y colorida, calzado cómodo.
-- Respuestas cortas, máximo 3-4 oraciones.
+- Responde SIEMPRE en máximo 2 oraciones. Sin listas, sin puntos, sin saludos largos.
 - Solo habla de eventos de baile y atuendo.`;
 }
 
@@ -259,7 +259,7 @@ export default function Buscar() {
             { role: "system", content: buildSystemPrompt(allEvents) },
             ...historial,
           ],
-          max_tokens: 300,
+          max_tokens: 150,
           temperature: 0.7,
         }),
       });
