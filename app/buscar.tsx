@@ -42,6 +42,7 @@ Reglas:
 - Para salsa: ropa cómoda y colorida, zapatos con suela lisa.
 - Para cumbia: ropa fresca y colorida, calzado cómodo.
 - Responde SIEMPRE en máximo 2 oraciones. Sin listas, sin puntos, sin saludos largos.
+- Divide la información de los eventos en mensajes, un mensaje por evento, no pongas información de dos o más eventos en el mismo mensaje.
 - Solo habla de eventos de baile y atuendo.`;
 }
 
