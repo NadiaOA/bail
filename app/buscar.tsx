@@ -17,7 +17,7 @@ import {
 import { Evento, useUser } from "./UserContext";
 import { NavBar } from "./inicio";
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const WHISPER_URL = "https://api.groq.com/openai/v1/audio/transcriptions";
 
